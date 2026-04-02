@@ -1,0 +1,12 @@
+﻿global using MediatR;
+global using Backend.Application.Abstractions;
+global using Backend.Application.Map;
+global using Backend.Application.Queries.Response;
+global using Backend.Application.Queries.Query;
+global using Backend.Application.Commands.Outcome;
+global using Backend.Application.Commands.Command;
+global using Backend.Domain.Exceptions;
+global using Backend.Domain.Service;
+global using Backend.Domain.Repository;
+global using Backend.Domain.Enum;
+global using Backend.Domain.Entity;

@@ -1,0 +1,37 @@
+﻿namespace Backend.Database.Configuration;
+
+public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
+{
+    public void Configure(EntityTypeBuilder<Attachment> builder)
+    {
+        builder.ToTable("Attachment");
+
+        // PK
+        builder.HasKey(a => a.Id);
+
+        // Properties
+        builder.Property(a => a.FileName)
+            .IsRequired()
+            .HasMaxLength(64);
+
+        builder.Property(a => a.Content)
+            .IsRequired()
+            .HasColumnType("bytea");
+
+        builder.Property(a => a.ContentType)
+            .IsRequired()
+            .HasMaxLength(8);
+
+        // Relations one-to-one, one-to-many, many-to-one, many-to-many
+        builder.HasOne(a => a.Commentary)
+            .WithMany(c => c.Attachments)
+            .HasForeignKey("CommentaryId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        // IXs
+        builder.HasIndex("CommentaryId")
+            .IsUnique()
+            .HasDatabaseName("IX__Attachment__CommentaryId");
+    }
+}

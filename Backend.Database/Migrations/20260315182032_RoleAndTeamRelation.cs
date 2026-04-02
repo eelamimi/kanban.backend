@@ -1,0 +1,50 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Backend.Database.Migrations
+{
+    /// <inheritdoc />
+    public partial class RoleAndTeamRelation : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AddColumn<Guid>(
+                name: "TeamId",
+                table: "Role",
+                type: "uuid",
+                nullable: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Role_TeamId",
+                table: "Role",
+                column: "TeamId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Role_Team_TeamId",
+                table: "Role",
+                column: "TeamId",
+                principalTable: "Team",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Role_Team_TeamId",
+                table: "Role");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Role_TeamId",
+                table: "Role");
+
+            migrationBuilder.DropColumn(
+                name: "TeamId",
+                table: "Role");
+        }
+    }
+}

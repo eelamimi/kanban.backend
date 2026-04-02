@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Backend.Database": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "CONNECTION_STRING": "Host=localhost;Port=5432;Database=BackendDevDb;Username=postgres;Password=ba11inin;"
+      }
+    }
+  }
+}
