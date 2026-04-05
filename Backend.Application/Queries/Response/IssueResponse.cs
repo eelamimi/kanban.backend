@@ -16,5 +16,5 @@ public class IssueResponse
 
     public int StoryPoints { get; set; }
 
-    public int Priority { get; set; }
+    public IssuePriority Priority { get; set; }
 }

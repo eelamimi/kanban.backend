@@ -22,7 +22,7 @@ public class Issue : BaseEntity
 
     public int StoryPoints { get; set; }
 
-    public int Priority { get; set; }
+    public IssuePriority Priority { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
