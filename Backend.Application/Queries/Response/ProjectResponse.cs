@@ -12,7 +12,7 @@ public class ProjectResponse
 
     public UserResponse Creator { get; set; }
 
-    public IEnumerable<FilterResponse> Filters { get; set; } = [];
+    public IEnumerable<UserResponse> Team { get; set; } = [];
 
     public IEnumerable<ColumnResponse> Columns { get; set; } = [];
 }
