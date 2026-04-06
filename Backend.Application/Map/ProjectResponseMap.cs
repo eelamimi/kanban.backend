@@ -9,7 +9,7 @@ public static class ProjectResponseMap
             .OrderBy(c => c.Position)
             ?? Enumerable.Empty<ColumnResponse>();
 
-        var team = project.Team?
+        var members = project.Team?
             .TeamUserProfiles
             .Select(tup => tup.UserProfile.Map()) 
             ?? [];
@@ -21,7 +21,7 @@ public static class ProjectResponseMap
             Description = project.Description,
             Name = project.Name,
             ShortName = project.ShortName,
-            Team = team,
+            Members = members,
             Columns = columns
         };
     }
