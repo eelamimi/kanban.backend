@@ -8,13 +8,15 @@ public class IssueResponse
 
     public UserResponse Author { get; set; }
 
-    public string PublicId { get; set; }
-
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     public IssueType IssueType { get; set; }
 
     public int StoryPoints { get; set; }
 
-    public IssuePriority Priority { get; set; }
+    public IssuePriority IssuePriority { get; set; }
+
+    public bool IsDeleted { get; set; }
+
+    public int NumberInProject { get; set; }
 }

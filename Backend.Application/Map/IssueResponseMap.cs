@@ -7,11 +7,12 @@ public static class IssueResponseMap
         return new IssueResponse
         {
             Id = issue.Id,
-            PublicId = issue.PublicId,
-            IssueType = issue.IssueType,
-            Priority = issue.Priority,
-            StoryPoints = issue.StoryPoints,
             Title = issue.Title,
+            StoryPoints = issue.StoryPoints,
+            NumberInProject = issue.NumberInProject,
+            IssueType = issue.IssueType,
+            IssuePriority = issue.IssuePriority,
+            IsDeleted = issue.IsDeleted,
             Assignee = issue.Assignee.Map(),
             Author = issue.Author.Map(),
         };

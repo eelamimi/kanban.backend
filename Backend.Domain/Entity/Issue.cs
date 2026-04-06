@@ -2,6 +2,10 @@
 
 public class Issue : BaseEntity
 {
+    public virtual Project Project { get; set; }
+
+    public Guid ProjectId { get; set; }
+    
     public virtual Column Column { get; set; }
 
     public Guid ColumnId { get; set; }
@@ -14,7 +18,7 @@ public class Issue : BaseEntity
 
     public Guid AuthorId { get; set; }
 
-    public string PublicId { get; set; } = string.Empty;
+    public int NumberInProject { get; set; }
 
     public string Title { get; set; } = string.Empty;
 
@@ -22,7 +26,9 @@ public class Issue : BaseEntity
 
     public int StoryPoints { get; set; }
 
-    public IssuePriority Priority { get; set; }
+    public IssuePriority IssuePriority { get; set; }
+
+    public bool IsDeleted { get; set; } = false;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

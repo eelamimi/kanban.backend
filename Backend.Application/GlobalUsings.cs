@@ -1,4 +1,5 @@
 ﻿global using MediatR;
+global using Microsoft.AspNetCore.Http;
 global using Backend.Application.Abstractions;
 global using Backend.Application.Map;
 global using Backend.Application.Queries.Response;

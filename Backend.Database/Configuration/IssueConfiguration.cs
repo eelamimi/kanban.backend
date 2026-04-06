@@ -10,9 +10,8 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
         builder.HasKey(i => i.Id);
 
         // Properties
-        builder.Property(i => i.PublicId)
-            .IsRequired()
-            .HasMaxLength(16);
+        builder.Property(i => i.NumberInProject)
+            .IsRequired();
 
         builder.Property(i => i.Priority)
             .IsRequired();
@@ -26,6 +25,10 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
 
         builder.Property(i => i.IssueType)
             .IsRequired();
+        
+        builder.Property(i => i.IsDeleted)
+            .IsRequired()
+            .HasDefaultValue(false);
 
         builder.Property(i => i.CreatedAt)
             .IsRequired()
@@ -37,25 +40,30 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
         // Relations one-to-one, one-to-many, many-to-one, many-to-many
         builder.HasOne(i => i.Assignee)
             .WithMany()
-            .HasForeignKey("AssigneeId")
+            .HasForeignKey(i => i.AssigneeId)
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
 
         builder.HasOne(i => i.Author)
             .WithMany()
-            .HasForeignKey("AuthorId")
+            .HasForeignKey(i => i.AuthorId)
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
 
         builder.HasOne(i => i.Column)
             .WithMany(c => c.Issues)
-            .HasForeignKey("ColumnId")
+            .HasForeignKey(i => i.ColumnId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        builder.HasOne(i => i.Project)
+            .WithMany()
+            .HasForeignKey(i => i.ProjectId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         builder.HasMany(i => i.Commentaries)
             .WithOne(c => c.Issue)
-            .HasForeignKey("IssueId")
+            .HasForeignKey(c => c.IssueId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
@@ -67,5 +75,11 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
         builder.HasIndex("AuthorId")
             .IsUnique()
             .HasDatabaseName("IX__Issue__AuthorId");
+
+        builder.HasIndex(i => new { i.ProjectId, i.NumberInProject, i.IsDeleted })
+            .IsUnique()
+            .HasFilter("\"IsDeleted\" = false");
+
+        builder.HasQueryFilter(i => !i.IsDeleted);
     }
 }

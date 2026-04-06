@@ -20,7 +20,10 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
 
         builder.Property(a => a.ContentType)
             .IsRequired()
-            .HasMaxLength(8);
+            .HasMaxLength(64);
+
+        builder.Property(a => a.Size)
+            .IsRequired();
 
         // Relations one-to-one, one-to-many, many-to-one, many-to-many
         builder.HasOne(a => a.Commentary)

@@ -1,0 +1,20 @@
+﻿namespace Backend.Domain.Repository;
+
+public interface IIssueRepository
+{
+    Task<Issue> GetByIdAsync(Guid id, CancellationToken token = default);
+
+    Task<Issue?> TryGetByIdAsync(Guid id, CancellationToken token = default);
+
+    Task<IEnumerable<Issue>> GetAllAsync(CancellationToken token = default);
+
+    Task<int> GetNextNumberInProjectAsync(Guid projectId, CancellationToken token = default);
+
+    void Add(Issue issue);
+
+    void Update(Issue issue);
+
+    void Remove(Issue issue);
+
+    Task<int> SaveChangesAsync(CancellationToken token = default);
+}

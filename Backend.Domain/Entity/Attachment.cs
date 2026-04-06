@@ -10,5 +10,7 @@ public class Attachment : BaseEntity
 
     public string ContentType { get; set; } = string.Empty;
 
+    public long Size { get; set; }
+
     public byte[] Content { get; set; } = [];
 }
