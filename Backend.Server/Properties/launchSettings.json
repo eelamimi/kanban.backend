@@ -5,7 +5,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         //$env:CONNECTION_STRING = "Host=localhost;Port=5432;Database=BackendDevDb;Username=postgres;Password=ba11inin"
-        "CONNECTION_STRING": "Host=localhost;Port=5432;Database=BackendDevDb;Username=postgres;Password=ba11inin;",
+        "CONNECTION_STRING": "Host=localhost;Port=5432;Database=BackendDevDb;Username=postgres;Password=ba11inin;Include Error Detail=true",
         "APPLY_MIGRATIONS": "true"
       },
       "dotnetRunMessages": true,
