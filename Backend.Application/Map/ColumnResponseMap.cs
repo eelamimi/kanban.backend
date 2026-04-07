@@ -9,7 +9,7 @@ public static class ColumnResponseMap
             Id = column.Id,
             Name = column.Name,
             Position = column.Position,
-            Issues = column.Issues.Select(i => i.Map())
+            Issues = column.Issues.Select(i => i.Map()).OrderBy(i => i.NumberInProject)
         };
     }
 }
