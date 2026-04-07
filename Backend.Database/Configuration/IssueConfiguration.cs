@@ -69,11 +69,9 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
 
         // IXs
         builder.HasIndex("AssigneeId")
-            .IsUnique()
             .HasDatabaseName("IX__Issue__AssigneeId");
 
         builder.HasIndex("AuthorId")
-            .IsUnique()
             .HasDatabaseName("IX__Issue__AuthorId");
 
         builder.HasIndex(i => new { i.ProjectId, i.NumberInProject, i.IsDeleted })

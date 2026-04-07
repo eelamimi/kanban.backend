@@ -46,11 +46,9 @@ public class CommentaryConfiguration : IEntityTypeConfiguration<Commentary>
 
         // IXs
         builder.HasIndex("IssueId")
-            .IsUnique()
             .HasDatabaseName("IX__Commentary__IssueId");
 
         builder.HasIndex("AuthorId")
-            .IsUnique()
             .HasDatabaseName("IX__Commentary__AuthorId");
     }
 }
