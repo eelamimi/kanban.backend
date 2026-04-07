@@ -13,7 +13,7 @@ public class CreateColumnCommandHandler(
         if (await projectRepository.HasColumnName(command.ProjectId, command.Name, token))
             throw new UserInputException("Column with this name already exists");
 
-        var project = await projectRepository.GetByIdAsync(command.ProjectId, cancellationToken: token);
+        var project = await projectRepository.GetByIdAsync(command.ProjectId, token: token);
         var column = new Column
         {
             Name = command.Name,

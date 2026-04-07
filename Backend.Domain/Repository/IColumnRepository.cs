@@ -2,11 +2,11 @@
 
 public interface IColumnRepository
 {
-    Task<Column> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Column> GetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<Column?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Column?> TryGetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<IEnumerable<Column>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Column>> GetAllAsync(CancellationToken token = default);
 
     void Add(Column column);
 
@@ -14,5 +14,5 @@ public interface IColumnRepository
 
     void Remove(Column column);
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }

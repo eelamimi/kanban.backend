@@ -2,7 +2,7 @@
 
 public interface ITeamUserProfileRepository
 {
-    Task<IEnumerable<TeamUserProfile>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<TeamUserProfile>> GetAllAsync(CancellationToken token = default);
 
     Task<IEnumerable<TeamUserProfile>> GetTeamsByUserProfileIdAsync(Guid userProfileId, CancellationToken token = default);
 
@@ -20,5 +20,5 @@ public interface ITeamUserProfileRepository
 
     void Remove(TeamUserProfile teamUserProfile);
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }

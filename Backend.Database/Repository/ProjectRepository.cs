@@ -2,13 +2,13 @@
 
 public class ProjectRepository(ApplicationDbContext context) : IProjectRepository
 {
-    public async Task<Project> GetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken cancellationToken = default)
+    public async Task<Project> GetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, includeIssues, includeTeam, cancellationToken)
+        return await TryGetByIdAsync(id, includeIssues, includeTeam, token)
             ?? throw new InvalidOperationException($"Project with id {id} was not found.");
     }
 
-    public async Task<Project?> TryGetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken cancellationToken = default)
+    public async Task<Project?> TryGetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
     {
         var query = context.Projects.AsQueryable();
 
@@ -29,7 +29,7 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
         return await query
             .Include(p => p.Creator)
                 .ThenInclude(up => up.User)
-            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(p => p.Id == id, token);
     }
 
     public async Task<IEnumerable<Project>> GetAllByTeamIdAsync(Guid teamId, CancellationToken token = default)
@@ -51,9 +51,9 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
     }
 
 
-    public async Task<IEnumerable<Project>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Project>> GetAllAsync(CancellationToken token = default)
     {
-        return await context.Projects.ToListAsync(cancellationToken);
+        return await context.Projects.ToListAsync(token);
     }
 
     public void Add(Project project)
@@ -71,8 +71,8 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
         context.Projects.Remove(project);
     }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
-        return await context.SaveChangesAsync(cancellationToken);
+        return await context.SaveChangesAsync(token);
     }
 }

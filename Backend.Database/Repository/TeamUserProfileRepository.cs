@@ -2,9 +2,9 @@
 
 public class TeamUserProfileRepository(ApplicationDbContext context) : ITeamUserProfileRepository
 {
-    public async Task<IEnumerable<TeamUserProfile>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TeamUserProfile>> GetAllAsync(CancellationToken token = default)
     {
-        return await context.TeamUserProfiles.ToListAsync(cancellationToken);
+        return await context.TeamUserProfiles.ToListAsync(token);
     }
 
     public async Task<IEnumerable<TeamUserProfile>> GetTeamsByUserProfileIdAsync(Guid userProfileId, CancellationToken token = default)
@@ -67,8 +67,8 @@ public class TeamUserProfileRepository(ApplicationDbContext context) : ITeamUser
         context.TeamUserProfiles.Remove(teamUserProfile);
     }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
-        return await context.SaveChangesAsync(cancellationToken);
+        return await context.SaveChangesAsync(token);
     }
 }

@@ -2,11 +2,11 @@
 
 public interface IRoleRepository
 {
-    Task<Role> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Role> GetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<Role?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Role?> TryGetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<IEnumerable<Role>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Role>> GetAllAsync(CancellationToken token = default);
 
     void Add(Role role);
 
@@ -14,5 +14,5 @@ public interface IRoleRepository
 
     void Remove(Role role);
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }

@@ -2,13 +2,13 @@
 
 public interface IProjectRepository
 {
-    Task<Project> GetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken cancellationToken = default);
+    Task<Project> GetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default);
 
-    Task<Project?> TryGetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken cancellationToken = default  );
+    Task<Project?> TryGetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default  );
 
     Task<IEnumerable<Project>> GetAllByTeamIdAsync(Guid teamId, CancellationToken token = default);
 
-    Task<IEnumerable<Project>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Project>> GetAllAsync(CancellationToken token = default);
 
     Task<bool> HasColumnName(Guid id, string columnName, CancellationToken token = default);
 
@@ -18,5 +18,5 @@ public interface IProjectRepository
 
     void Remove(Project project);
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }

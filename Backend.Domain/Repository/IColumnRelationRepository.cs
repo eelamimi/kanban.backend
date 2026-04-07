@@ -2,9 +2,9 @@
 
 public interface IColumnRelationRepository
 {
-    Task<IEnumerable<ColumnRelation>> GetAllPrevByNextAsync(Guid nextId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<ColumnRelation>> GetAllPrevByNextAsync(Guid nextId, CancellationToken token = default);
 
-    Task<IEnumerable<ColumnRelation>> GetAllNextByPrevAsync(Guid prevId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<ColumnRelation>> GetAllNextByPrevAsync(Guid prevId, CancellationToken token = default);
 
     void Add(ColumnRelation columnRelation);
 
@@ -12,5 +12,5 @@ public interface IColumnRelationRepository
 
     void Remove(ColumnRelation columnRelation);
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }

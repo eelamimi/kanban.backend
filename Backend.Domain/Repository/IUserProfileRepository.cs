@@ -2,11 +2,11 @@
 
 public interface IUserProfileRepository
 {
-    Task<UserProfile> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<UserProfile> GetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<UserProfile?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<UserProfile?> TryGetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<IEnumerable<UserProfile>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<UserProfile>> GetAllAsync(CancellationToken token = default);
 
     void Add(UserProfile userProfile);
 
@@ -14,5 +14,5 @@ public interface IUserProfileRepository
 
     void Remove(UserProfile userProfile);
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }

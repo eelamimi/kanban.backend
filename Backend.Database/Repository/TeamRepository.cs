@@ -2,20 +2,20 @@
 
 public class TeamRepository(ApplicationDbContext context) : ITeamRepository
 {
-    public async Task<Team> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Team> GetByIdAsync(Guid id, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, cancellationToken) ?? throw new NullReferenceException("Team is null");
+        return await TryGetByIdAsync(id, token) ?? throw new NullReferenceException("Team is null");
     }
 
-    public async Task<Team?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Team?> TryGetByIdAsync(Guid id, CancellationToken token = default)
     {
         return await context.Teams
-            .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(t => t.Id == id, token);
     }
 
-    public async Task<IEnumerable<Team>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Team>> GetAllAsync(CancellationToken token = default)
     {
-        return await context.Teams.ToListAsync(cancellationToken);
+        return await context.Teams.ToListAsync(token);
     }
 
     public void Add(Team team)
@@ -33,8 +33,8 @@ public class TeamRepository(ApplicationDbContext context) : ITeamRepository
         context.Teams.Remove(team);
     }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
-        return await context.SaveChangesAsync(cancellationToken);
+        return await context.SaveChangesAsync(token);
     }
 }

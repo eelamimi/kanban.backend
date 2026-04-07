@@ -2,19 +2,19 @@
 
 public class ColumnRelationRepository(ApplicationDbContext context) : IColumnRelationRepository
 {
-    public Task<IEnumerable<ColumnRelation>> GetAllPrevByNextAsync(Guid nextId, CancellationToken cancellationToken = default)
+    public Task<IEnumerable<ColumnRelation>> GetAllPrevByNextAsync(Guid nextId, CancellationToken token = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<ColumnRelation>> GetAllNextByPrevAsync(Guid prevId, CancellationToken cancellationToken = default)
+    public Task<IEnumerable<ColumnRelation>> GetAllNextByPrevAsync(Guid prevId, CancellationToken token = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<ColumnRelation>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ColumnRelation>> GetAllAsync(CancellationToken token = default)
     {
-        return await context.ColumnRelations.ToListAsync(cancellationToken);
+        return await context.ColumnRelations.ToListAsync(token);
     }
 
     public void Add(ColumnRelation column)
@@ -32,8 +32,8 @@ public class ColumnRelationRepository(ApplicationDbContext context) : IColumnRel
         context.ColumnRelations.Remove(column);
     }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
-        return await context.SaveChangesAsync(cancellationToken);
+        return await context.SaveChangesAsync(token);
     }
 }

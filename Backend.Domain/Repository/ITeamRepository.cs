@@ -2,11 +2,11 @@
 
 public interface ITeamRepository
 {
-    Task<Team> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Team> GetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<Team?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Team?> TryGetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<IEnumerable<Team>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Team>> GetAllAsync(CancellationToken token = default);
 
     void Add(Team team);
 
@@ -14,5 +14,5 @@ public interface ITeamRepository
 
     void Remove(Team team);
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }
