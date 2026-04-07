@@ -2,9 +2,9 @@
 
 public class TeamDetailsResponse
 {
-    public string Name { get; set; }
+    public string Name { get; init; } = string.Empty;
 
-    public IEnumerable<ProjectResponse> Projects { get; set; }
+    public IEnumerable<ProjectResponse> Projects { get; init; } = [];
 
-    public IEnumerable<UserRolePair> UserRolePairs { get; set; }
+    public IEnumerable<UserRolePair> UserRolePairs { get; init; } = [];
 }

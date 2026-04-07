@@ -2,7 +2,7 @@
 
 public class Attachment : BaseEntity
 {
-    public virtual Commentary? Commentary { get; set; }
+    public virtual Commentary Commentary { get; set; }
 
     public Guid CommentaryId { get; set; }
 

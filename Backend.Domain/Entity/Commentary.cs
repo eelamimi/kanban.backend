@@ -2,11 +2,11 @@
 
 public class Commentary : BaseEntity
 {
-    public virtual UserProfile? Author { get; set; }
+    public virtual UserProfile Author { get; set; }
 
     public Guid AuthorId { get; set; }
 
-    public virtual Issue? Issue { get; set; }
+    public virtual Issue Issue { get; set; }
 
     public Guid IssueId { get; set; }
 
