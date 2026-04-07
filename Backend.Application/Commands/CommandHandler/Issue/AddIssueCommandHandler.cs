@@ -3,10 +3,9 @@
 public class AddIssueCommandHandler(
     IIssueRepository issueRepository,
     IProjectRepository projectRepository,
-    IUserProfileRepository userProfileRepository
-    //ICommentaryRepository commentaryRepository,
-    //IAttachmentRepository attachmentRepository
-    )
+    IUserProfileRepository userProfileRepository,
+    ICommentaryRepository commentaryRepository,
+    IAttachmentRepository attachmentRepository)
     : ICommandHandler<AddIssueCommand, IssueResponse>
 {
     public async Task<IssueResponse> Handle(AddIssueCommand command, CancellationToken token)
@@ -20,6 +19,9 @@ public class AddIssueCommandHandler(
         var issue = new Issue
         {
             ColumnId = column.Id,
+            Column = column,
+            ProjectId = project.Id,
+            Project = project,
             AuthorId = command.AuthorId,
             Author = author,
             AssigneeId = command.AssigneeId,
@@ -56,11 +58,12 @@ public class AddIssueCommandHandler(
                 Size = file.Length
             };
 
-            attachmenRpository.Add(attachment);
+            attachmentRepository.Add(attachment);
         }
 
         issueRepository.Add(issue);
         commentaryRepository.Add(commentary);
+        await issueRepository.SaveChangesAsync(token);
 
         return issue.Map();
     }

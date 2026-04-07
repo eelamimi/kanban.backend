@@ -13,7 +13,7 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
         builder.Property(i => i.NumberInProject)
             .IsRequired();
 
-        builder.Property(i => i.Priority)
+        builder.Property(i => i.IssuePriority)
             .IsRequired();
 
         builder.Property(i => i.StoryPoints)

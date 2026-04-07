@@ -20,7 +20,7 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
 
         builder.Property(a => a.ContentType)
             .IsRequired()
-            .HasMaxLength(64);
+            .HasMaxLength(256);
 
         builder.Property(a => a.Size)
             .IsRequired();
@@ -34,7 +34,6 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
 
         // IXs
         builder.HasIndex("CommentaryId")
-            .IsUnique()
             .HasDatabaseName("IX__Attachment__CommentaryId");
     }
 }
