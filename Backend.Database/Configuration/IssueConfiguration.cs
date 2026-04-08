@@ -78,6 +78,6 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
             .IsUnique()
             .HasFilter("\"IsDeleted\" = false");
 
-        builder.HasQueryFilter(i => !i.IsDeleted);
+        //builder.HasQueryFilter(i => !i.IsDeleted);
     }
 }

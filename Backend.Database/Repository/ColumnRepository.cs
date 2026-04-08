@@ -2,14 +2,24 @@
 
 public class ColumnRepository(ApplicationDbContext context) : IColumnRepository
 {
-    public async Task<Column> GetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Column> GetByIdAsync(Guid id, bool withNextColumns = false, bool withProject = false, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, token) ?? throw new NullReferenceException("Column is null");
+        return await TryGetByIdAsync(id, withNextColumns, withProject, token)
+            ?? throw new NullReferenceException("Column is null");
     }
 
-    public async Task<Column?> TryGetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Column?> TryGetByIdAsync(Guid id, bool withNextColumns = false, bool withProject = false, CancellationToken token = default)
     {
-        return await context.Columns
+        var query = context.Columns.AsQueryable();
+
+        if (withNextColumns)
+            query = query.Include(c => c.NextColumnRelations);
+
+        if (withProject)
+            query = query.Include(c => c.Project)
+                .ThenInclude(p => p.Columns);
+
+        return await query
             .FirstOrDefaultAsync(c => c.Id == id, token);
     }
 

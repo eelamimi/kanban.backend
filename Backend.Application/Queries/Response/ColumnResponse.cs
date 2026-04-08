@@ -8,5 +8,7 @@ public class ColumnResponse
 
     public int Position { get; set; }
 
+    public IEnumerable<Guid> NextColumns { get; set; } = [];
+
     public IEnumerable<IssueResponse> Issues { get; set; } = [];
 }

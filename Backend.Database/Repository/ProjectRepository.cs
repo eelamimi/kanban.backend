@@ -1,4 +1,6 @@
-﻿namespace Backend.Database.Repository;
+﻿using Microsoft.EntityFrameworkCore.Query;
+
+namespace Backend.Database.Repository;
 
 public class ProjectRepository(ApplicationDbContext context) : IProjectRepository
 {
@@ -13,18 +15,38 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
         var query = context.Projects.AsQueryable();
 
         if (includeIssues)
-            query = query
-                .Include(p => p.Columns)
-                    .ThenInclude(c => c.Issues)
-                        .ThenInclude(i => i.Assignee)
-                .Include(p => p.Columns)
-                    .ThenInclude(c => c.Issues)
-                        .ThenInclude(i => i.Author);
+        {
+            var twoWeeksAgo = DateTime.UtcNow.AddDays(-14);
+            if (includeTeam)
+                return await query
+                    .Include(p => p.Columns)
+                        .ThenInclude(c => c.NextColumnRelations)
+                    .Include(p => p.Columns)
+                        .ThenIncludeIssues(twoWeeksAgo)
+                    .Include(p => p.Team)
+                        .ThenInclude(t => t.TeamUserProfiles)
+                            .ThenInclude(tup => tup.UserProfile)
+                                .ThenInclude(up => up.User)
+                    .FirstOrDefaultAsync(p => p.Id == id, token);
+            else
+                return await query
+                    .Include(p => p.Columns)
+                        .ThenInclude(c => c.NextColumnRelations)
+                    .Include(p => p.Columns)
+                        .ThenIncludeIssues(twoWeeksAgo)
+                            .ThenInclude(i => i.Assignee)
+                                .ThenInclude(up => up.User)
+                    .Include(p => p.Creator)
+                        .ThenInclude(up => up.User)
+                    .FirstOrDefaultAsync(p => p.Id == id, token);
+        }
 
         if (includeTeam)
-            query = query.Include(p => p.Team)
+            return await query.Include(p => p.Team)
                 .ThenInclude(t => t.TeamUserProfiles)
-                    .ThenInclude(tup => tup.UserProfile);
+                    .ThenInclude(tup => tup.UserProfile)
+                        .ThenInclude(up => up.User)
+                            .FirstOrDefaultAsync(p => p.Id == id, token);
 
         return await query
             .Include(p => p.Creator)
@@ -74,5 +96,23 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
     public async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
         return await context.SaveChangesAsync(token);
+    }
+}
+
+public static class QueryableExtensions
+{
+    public static IIncludableQueryable<TEntity, IEnumerable<Issue>> ThenIncludeIssues<TEntity>(
+        this IIncludableQueryable<TEntity, IEnumerable<Column>> query,
+        DateTime twoWeeksAgo) where TEntity : class
+    {
+        return query.ThenInclude(c => c.Issues.Where(i =>
+            i.ClosedAt == null || i.ClosedAt > twoWeeksAgo));
+    }
+
+    public static IIncludableQueryable<Column, IEnumerable<Issue>> ThenIncludeIssues(
+        this IQueryable<Column> query, DateTime twoWeeksAgo)
+    {
+        return query.Include(c => c.Issues.Where(i =>
+            i.ClosedAt == null || i.ClosedAt > twoWeeksAgo));
     }
 }

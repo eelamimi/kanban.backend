@@ -24,7 +24,7 @@ public class CreateColumnCommandHandler(
 
         if (command.PrevColumnId.HasValue)
         {
-            var prevColumn = await columnRepository.GetByIdAsync(command.PrevColumnId.Value, token);
+            var prevColumn = await columnRepository.GetByIdAsync(command.PrevColumnId.Value, token: token);
             var prevColumnRelation = new ColumnRelation
             {
                 PrevColumn = prevColumn,
@@ -35,7 +35,7 @@ public class CreateColumnCommandHandler(
 
         if (command.NextColumnId.HasValue)
         {
-            var nextColumn = await columnRepository.GetByIdAsync(command.NextColumnId.Value, token);
+            var nextColumn = await columnRepository.GetByIdAsync(command.NextColumnId.Value, token: token);
             var nextColumnRelation = new ColumnRelation
             {
                 PrevColumn = column,
