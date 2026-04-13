@@ -12,4 +12,13 @@ public class IssueController(IMediator mediator) : ControllerBase
 
         return result;
     }
+
+    [HttpPost]
+    [Route("moveIssue")]
+    public async Task<StatusCodeResult> MoveIssue([FromBody] MoveIssueCommand command)
+    {
+        await mediator.Send(command);
+
+        return Ok();
+    }
 }
