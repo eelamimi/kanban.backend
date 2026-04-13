@@ -24,6 +24,11 @@ public class MoveIssueCommandHandler(
             issue.IsDeleted = true;
             issue.ClosedAt = DateTime.UtcNow;
         }
+        else
+        {
+            issue.IsDeleted = false;
+            issue.ClosedAt = null;
+        }
 
         await issueRepository.SaveChangesAsync(token);
     }
