@@ -17,19 +17,19 @@ public class ColumnRelationRepository(ApplicationDbContext context) : IColumnRel
         return await context.ColumnRelations.ToListAsync(token);
     }
 
-    public void Add(ColumnRelation column)
+    public void Add(ColumnRelation columnRelation)
     {
-        context.ColumnRelations.Add(column);
+        context.ColumnRelations.Add(columnRelation);
     }
 
-    public void Update(ColumnRelation column)
+    public void Update(ColumnRelation columnRelation)
     {
-        context.ColumnRelations.Update(column);
+        context.ColumnRelations.Update(columnRelation);
     }
 
-    public void Remove(ColumnRelation column)
+    public void Remove(ColumnRelation columnRelation)
     {
-        context.ColumnRelations.Remove(column);
+        context.ColumnRelations.Remove(columnRelation);
     }
 
     public async Task<int> SaveChangesAsync(CancellationToken token = default)
