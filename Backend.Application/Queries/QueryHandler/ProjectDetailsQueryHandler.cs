@@ -10,7 +10,7 @@ public class ProjectDetailsQueryHandler(
         if (!await teamUserProfileRepository.IsInProject(query.UserProfileId, query.ProjectId, token))
             throw new ForbiddenException("User is not in project");
 
-        var project = await projectRepository.GetByIdAsync(query.ProjectId, true, true, token);
+        var project = await projectRepository.GetByIdAsync(query.ProjectId, false, true, true, token);
 
         return project.Map();
     }

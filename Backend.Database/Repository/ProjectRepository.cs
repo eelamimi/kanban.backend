@@ -4,15 +4,18 @@ namespace Backend.Database.Repository;
 
 public class ProjectRepository(ApplicationDbContext context) : IProjectRepository
 {
-    public async Task<Project> GetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
+    public async Task<Project> GetByIdAsync(Guid id, bool includeColumns = false, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, includeIssues, includeTeam, token)
+        return await TryGetByIdAsync(id, includeColumns, includeIssues, includeTeam, token)
             ?? throw new InvalidOperationException($"Project with id {id} was not found.");
     }
 
-    public async Task<Project?> TryGetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
+    public async Task<Project?> TryGetByIdAsync(Guid id, bool includeColumns = false, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
     {
         var query = context.Projects.AsQueryable();
+            
+        if (includeColumns)
+            query = query.Include(p => p.Columns);
 
         if (includeIssues)
         {

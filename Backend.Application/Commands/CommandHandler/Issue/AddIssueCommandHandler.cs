@@ -11,7 +11,7 @@ public class AddIssueCommandHandler(
     public async Task<IssueResponse> Handle(AddIssueCommand command, CancellationToken token)
     {
         var issueNumber = await issueRepository.GetNextNumberInProjectAsync(command.ProjectId, token);
-        var project = await projectRepository.GetByIdAsync(command.ProjectId, true, false, token);
+        var project = await projectRepository.GetByIdAsync(command.ProjectId, false, true, false, token);
         var column = project.Columns.Single(column => column.Position == 0);
         var author = await userProfileRepository.GetByIdAsync(command.AuthorId, token);
         var assignee = await userProfileRepository.GetByIdAsync(command.AssigneeId, token);

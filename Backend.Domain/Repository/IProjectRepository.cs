@@ -2,9 +2,9 @@
 
 public interface IProjectRepository
 {
-    Task<Project> GetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default);
+    Task<Project> GetByIdAsync(Guid id, bool includeColumns = false, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default);
 
-    Task<Project?> TryGetByIdAsync(Guid id, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default  );
+    Task<Project?> TryGetByIdAsync(Guid id, bool includeColumns = false, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default  );
 
     Task<IEnumerable<Project>> GetAllByTeamIdAsync(Guid teamId, CancellationToken token = default);
 
