@@ -17,4 +17,12 @@ public class ProjectController(IMediator mediator) : ControllerBase
 
         return result;
     }
+
+    [HttpPut]
+    public async Task<StatusCodeResult> UpdateProject([FromBody] UpdateProjectCommand command)
+    {
+        await mediator.Send(command);
+
+        return Ok();
+    }
 }
