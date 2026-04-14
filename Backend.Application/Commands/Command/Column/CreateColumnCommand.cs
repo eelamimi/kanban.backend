@@ -1,6 +1,6 @@
 ﻿namespace Backend.Application.Commands.Command;
 
-public class CreateColumnCommand : ICommand<CreateColumnResult>
+public class CreateColumnCommand : ICommand<ColumnResponse>
 {
     public Guid ProjectId { get; init; }
 

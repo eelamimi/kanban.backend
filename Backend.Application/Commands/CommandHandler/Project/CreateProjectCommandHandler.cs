@@ -22,10 +22,10 @@ public class CreateProjectCommandHandler(
         await projectRepository.SaveChangesAsync(token);
 
         Guid? prevColumnId = null;
-        var columnNames = new[] { "To Do", "Work In Progress", "Done" };
+        var columnNames = new[] { "Бэклог", "В работе", "Завершено" };
         for (int i = 0; i < 3; i++)
         {
-            var prevColumnResult = await mediator.Send(new CreateColumnCommand
+            var prevColumn = await mediator.Send(new CreateColumnCommand
             {
                 ProjectId = project.Id,
                 PrevColumnId = prevColumnId,
@@ -33,7 +33,7 @@ public class CreateProjectCommandHandler(
                 Position = i
             }, token);
 
-            prevColumnId = prevColumnResult.ColumnId;
+            prevColumnId = prevColumn.Id;
         }
 
         return new CreateProjectResult

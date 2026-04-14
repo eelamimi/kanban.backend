@@ -3,9 +3,9 @@
 public class CreateColumnCommandHandler(
     IProjectRepository projectRepository,
     IColumnRepository columnRepository,
-    IColumnRelationRepository columnRelationRepository) : ICommandHandler<CreateColumnCommand, CreateColumnResult>
+    IColumnRelationRepository columnRelationRepository) : ICommandHandler<CreateColumnCommand, ColumnResponse>
 {
-    public async Task<CreateColumnResult> Handle(CreateColumnCommand command, CancellationToken token)
+    public async Task<ColumnResponse> Handle(CreateColumnCommand command, CancellationToken token)
     {
         if (string.IsNullOrWhiteSpace(command.Name))
             throw new UserInputException("Column name cannot be empty");
@@ -13,7 +13,7 @@ public class CreateColumnCommandHandler(
         if (await projectRepository.HasColumnName(command.ProjectId, command.Name, token))
             throw new UserInputException("Column with this name already exists");
 
-        var project = await projectRepository.GetByIdAsync(command.ProjectId, token: token);
+        var project = await projectRepository.GetByIdAsync(command.ProjectId, true, token: token);
         var column = new Column
         {
             Name = command.Name,
@@ -21,6 +21,12 @@ public class CreateColumnCommandHandler(
             Project = project,
         };
         columnRepository.Add(column);
+
+        foreach (var col in project.Columns.Where(col => col.Position >= column.Position && col.Id != column.Id))
+        {
+            col.Position++;
+            columnRepository.Update(col);
+        }
 
         if (command.PrevColumnId.HasValue)
         {
@@ -46,9 +52,13 @@ public class CreateColumnCommandHandler(
 
         await columnRepository.SaveChangesAsync(token);
 
-        return new CreateColumnResult
+        return new ColumnResponse
         {
-            ColumnId = column.Id,
+            Id = column.Id,
+            Name = column.Name,
+            Position = column.Position,
+            Issues = [],
+            NextColumns = [],
         };
     }
 }
