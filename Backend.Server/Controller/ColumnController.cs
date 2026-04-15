@@ -14,6 +14,14 @@ public class ColumnController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut]
+    public async Task<StatusCodeResult> UpdateName([FromBody] UpdateColumnNameCommand command)
+    {
+        await mediator.Send(command);
+
+        return Ok();
+    }
+
+    [HttpPut]
     [Route("updatePosition")]
     public async Task<StatusCodeResult> UpdatePosition([FromBody] UpdatePositionCommand command)
     {
