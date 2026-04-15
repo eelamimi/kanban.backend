@@ -13,7 +13,16 @@ public class ColumnController(IMediator mediator) : ControllerBase
         return result;
     }
 
-    [HttpPost]
+    [HttpPut]
+    [Route("updatePosition")]
+    public async Task<StatusCodeResult> UpdatePosition([FromBody] UpdatePositionCommand command)
+    {
+        await mediator.Send(command);
+
+        return Ok();
+    }
+
+    [HttpPut]
     [Route("updateRelation")]
     public async Task<StatusCodeResult> UpdateRelation([FromBody] UpdateRelationCommand command)
     {
