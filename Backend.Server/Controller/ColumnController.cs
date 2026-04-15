@@ -21,6 +21,14 @@ public class ColumnController(IMediator mediator) : ControllerBase
         return Ok();
     }
 
+    [HttpDelete]
+    public async Task<StatusCodeResult> DeleteColumn([FromBody] DeleteColumnCommand command)
+    {
+        await mediator.Send(command);
+
+        return Ok();
+    }
+
     [HttpPut]
     [Route("updatePosition")]
     public async Task<StatusCodeResult> UpdatePosition([FromBody] UpdatePositionCommand command)
