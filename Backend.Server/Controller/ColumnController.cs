@@ -22,9 +22,13 @@ public class ColumnController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<StatusCodeResult> DeleteColumn([FromBody] DeleteColumnCommand command)
+    [Route("{id:guid}")]
+    public async Task<StatusCodeResult> DeleteColumn([FromRoute] Guid id)
     {
-        await mediator.Send(command);
+        await mediator.Send(new DeleteColumnCommand
+        {
+            Id = id
+        });
 
         return Ok();
     }
