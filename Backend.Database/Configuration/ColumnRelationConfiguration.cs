@@ -13,13 +13,13 @@ public class ColumnRelationConfiguration : IEntityTypeConfiguration<ColumnRelati
         builder.HasOne(cr => cr.PrevColumn)
             .WithMany(c => c.NextColumnRelations)
             .HasForeignKey("PrevColumnId")
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         builder.HasOne(cr => cr.NextColumn)
             .WithMany(c => c.PrevColumnRelations)
             .HasForeignKey("NextColumnId")
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         // IXs

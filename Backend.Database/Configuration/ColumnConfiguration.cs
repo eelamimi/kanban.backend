@@ -31,11 +31,11 @@ public class ColumnConfiguration : IEntityTypeConfiguration<Column>
         builder.HasMany(c => c.NextColumnRelations)
             .WithOne(cr => cr.PrevColumn)
             .HasForeignKey("PrevColumnId")
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(c => c.PrevColumnRelations)
             .WithOne(cr => cr.NextColumn)
             .HasForeignKey("NextColumnId")
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
