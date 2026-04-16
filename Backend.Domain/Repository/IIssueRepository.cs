@@ -10,6 +10,8 @@ public interface IIssueRepository
 
     Task<int> GetNextNumberInProjectAsync(Guid projectId, CancellationToken token = default);
 
+    Task SetDeletedByColumnIdAsync(Guid columnId, bool isDeleted = false, CancellationToken token = default);
+
     void Add(Issue issue);
 
     void Update(Issue issue);

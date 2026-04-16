@@ -38,6 +38,17 @@ public class IssueRepository(ApplicationDbContext context) : IIssueRepository
         }
     }
 
+    public async Task SetDeletedByColumnIdAsync(Guid columnId, bool isDeleted = false, CancellationToken token = default)
+    {
+        DateTime? closedAt = isDeleted ? DateTime.UtcNow : null;
+        await context.Issues
+            .Where(i => i.ColumnId == columnId)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(i => i.IsDeleted, isDeleted)
+                .SetProperty(i => i.ClosedAt, closedAt),
+                token);
+    }
+
     public void Add(Issue issue)
     {
         context.Issues.Add(issue);
