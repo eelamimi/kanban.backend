@@ -7,8 +7,8 @@ public class UpdateRelationCommandHandler(
 {
     public async Task Handle(UpdateRelationCommand command, CancellationToken token)
     {
-        var nextColumn = await columnRepository.GetByIdAsync(command.ToColumnId, false, false, token);
-        var prevColumn = await columnRepository.GetByIdAsync(command.FromColumnId, false, false, token);
+        var nextColumn = await columnRepository.GetByIdAsync(command.ToColumnId, token: token);
+        var prevColumn = await columnRepository.GetByIdAsync(command.FromColumnId, token: token);
 
         if (command.IsTransitionAllowed)
             columnRelationRepository.Add(new ColumnRelation

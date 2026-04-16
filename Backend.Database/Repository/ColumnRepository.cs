@@ -2,15 +2,18 @@
 
 public class ColumnRepository(ApplicationDbContext context) : IColumnRepository
 {
-    public async Task<Column> GetByIdAsync(Guid id, bool withNextColumns = false, bool withProject = false, CancellationToken token = default)
+    public async Task<Column> GetByIdAsync(Guid id, bool withIssues = false, bool withNextColumns = false, bool withProject = false, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, withNextColumns, withProject, token)
+        return await TryGetByIdAsync(id, withIssues, withNextColumns, withProject, token)
             ?? throw new NullReferenceException("Column is null");
     }
 
-    public async Task<Column?> TryGetByIdAsync(Guid id, bool withNextColumns = false, bool withProject = false, CancellationToken token = default)
+    public async Task<Column?> TryGetByIdAsync(Guid id, bool withIssues = false, bool withNextColumns = false, bool withProject = false, CancellationToken token = default)
     {
         var query = context.Columns.AsQueryable();
+
+        if (withIssues)
+            query = query.Include(c => c.Issues);
 
         if (withNextColumns)
             query = query.Include(c => c.NextColumnRelations);

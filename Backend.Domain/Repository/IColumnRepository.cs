@@ -2,9 +2,9 @@
 
 public interface IColumnRepository
 {
-    Task<Column> GetByIdAsync(Guid id, bool withNextColumns = false, bool withProject = false, CancellationToken token = default);
+    Task<Column> GetByIdAsync(Guid id, bool withIssues = false, bool withNextColumns = false, bool withProject = false, CancellationToken token = default);
 
-    Task<Column?> TryGetByIdAsync(Guid id, bool withNextColumns = false, bool withProject = false, CancellationToken token = default);
+    Task<Column?> TryGetByIdAsync(Guid id, bool withIssues = false, bool withNextColumns = false, bool withProject = false, CancellationToken token = default);
 
     Task<IEnumerable<Column>> GetAllAsync(CancellationToken token = default);
 
