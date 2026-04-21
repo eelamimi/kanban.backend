@@ -6,7 +6,7 @@ public class IssueRepository(ApplicationDbContext context) : IIssueRepository
 
     public async Task<Issue> GetByIdAsync(Guid id, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, token) ?? throw new NullReferenceException("Issue is null");
+        return await TryGetByIdAsync(id, token) ?? throw new NullReferenceException("Issue not found");
     }
 
     public async Task<Issue?> TryGetByIdAsync(Guid id, CancellationToken token = default)
