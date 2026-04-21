@@ -4,6 +4,10 @@ public static class IssueResponseMap
 {
     public static IssueResponse Map(this Issue issue)
     {
+        var commentaries = issue.Commentaries?
+            .Select(commentary => commentary.Map())
+            ?? [];
+
         return new IssueResponse
         {
             Id = issue.Id,

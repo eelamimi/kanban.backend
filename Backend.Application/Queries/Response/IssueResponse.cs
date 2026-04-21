@@ -19,4 +19,6 @@ public class IssueResponse
     public bool IsDeleted { get; set; }
 
     public int NumberInProject { get; set; }
+
+    public IEnumerable<CommentaryResponse> Commentaries { get; set; } = [];
 }
