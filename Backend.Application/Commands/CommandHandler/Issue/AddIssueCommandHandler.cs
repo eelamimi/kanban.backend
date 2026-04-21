@@ -51,6 +51,7 @@ public class AddIssueCommandHandler(
 
             var attachment = new Attachment
             {
+                IssueId = issue.Id,
                 CommentaryId = commentary.Id,
                 Content = fileBytes,
                 ContentType = file.ContentType,
