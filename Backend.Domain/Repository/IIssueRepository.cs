@@ -6,6 +6,8 @@ public interface IIssueRepository
 
     Task<Issue?> TryGetByIdAsync(Guid id, CancellationToken token = default);
 
+    Task<Issue> GetByNumberInProjectAndProjectIdsAsync(int numberInProject, Guid projectId, bool withCommentaries = false, CancellationToken token = default);
+
     Task<IEnumerable<Issue>> GetAllAsync(CancellationToken token = default);
 
     Task<int> GetNextNumberInProjectAsync(Guid projectId, CancellationToken token = default);

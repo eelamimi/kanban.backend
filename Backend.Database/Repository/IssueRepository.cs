@@ -20,6 +20,17 @@ public class IssueRepository(ApplicationDbContext context) : IIssueRepository
         return await context.Issues.ToListAsync(token);
     }
 
+    public async Task<Issue> GetByNumberInProjectAndProjectIdsAsync(int numberInProject, Guid projectId, bool withCommentaries = false, CancellationToken token = default)
+    {
+        var query = context.Issues
+            .Where(i => i.NumberInProject == numberInProject && i.ProjectId == projectId);
+
+        if (withCommentaries)
+            query = query.Include(i => i.Commentaries);
+
+        return await query.FirstOrDefaultAsync(token) ?? throw new NullReferenceException("Issue not found");
+    }
+
     public async Task<int> GetNextNumberInProjectAsync(Guid projectId, CancellationToken token = default)
     {
         await _lock.WaitAsync(token);
