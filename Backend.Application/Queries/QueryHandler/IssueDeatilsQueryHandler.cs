@@ -7,7 +7,7 @@ public class IssueDeatilsQueryHandler(
 {
     public async Task<IssueResponse> Handle(IssueDeatilsQuery query, CancellationToken token)
     {
-        var numberInProject = int.Parse(query.PublicId.Split('-', 1)[1]);
+        var numberInProject = int.Parse(query.PublicId.Split('-', 2)[1]);
         var issue = await issueRepository.GetByNumberInProjectAndProjectIdsAsync(numberInProject, query.ProjectId, true, token);
         var attachments = await attachmentRepository.GetAllByIssueIdAsync(issue.Id, token);
 
