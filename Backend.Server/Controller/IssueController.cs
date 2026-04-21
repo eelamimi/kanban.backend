@@ -5,6 +5,19 @@
 [ApiController]
 public class IssueController(IMediator mediator) : ControllerBase
 {
+    [HttpGet]
+    [Route("{issuePublicId}")]
+    public async Task<IssueResponse> GetIssueDetails([FromRoute] string issuePublicId)
+    {
+        var result = await mediator.Send(new IssueDeatilsQuery
+        {
+            PublicId = issuePublicId,
+            ProjectId = Request.GetUserProfileIdFromHeader()
+        });
+
+        return result;
+    }
+
     [HttpPost]
     public async Task<IssueResponse> AddIssue([FromForm] AddIssueCommand command)
     {

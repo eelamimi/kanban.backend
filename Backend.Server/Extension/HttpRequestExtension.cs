@@ -11,4 +11,9 @@ public static class HttpRequestExtension
     {
         return new Guid(request.Headers["UserProfileId"].ToString());
     }
+
+    public static Guid GetProjectIdFromHeader(this HttpRequest request)
+    {
+        return new Guid(request.Headers["ProjectId"].ToString());
+    }
 }
