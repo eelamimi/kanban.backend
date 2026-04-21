@@ -22,5 +22,5 @@ public class IssueResponse
 
     public IEnumerable<CommentaryResponse> Commentaries { get; set; } = [];
 
-    public IEnumerable<AttachmentResponse> attachments { get; set; } = [];
+    public IEnumerable<AttachmentResponse> Attachments { get; set; } = [];
 }
