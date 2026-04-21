@@ -26,9 +26,17 @@ public class IssueRepository(ApplicationDbContext context) : IIssueRepository
             .Where(i => i.NumberInProject == numberInProject && i.ProjectId == projectId);
 
         if (withCommentaries)
-            query = query.Include(i => i.Commentaries);
+            query = query
+                .Include(i => i.Commentaries)
+                    .ThenInclude(c => c.Author)
+                        .ThenInclude(up => up.User);
 
-        return await query.FirstOrDefaultAsync(token) ?? throw new NullReferenceException("Issue not found");
+        return await query
+            .Include(i => i.Assignee)
+                .ThenInclude(up => up.User)
+            .Include(i => i.Author)
+                .ThenInclude(up => up.User)
+            .FirstOrDefaultAsync(token) ?? throw new NullReferenceException("Issue not found");
     }
 
     public async Task<int> GetNextNumberInProjectAsync(Guid projectId, CancellationToken token = default)
