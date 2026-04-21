@@ -12,7 +12,7 @@ public class IssueController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(new IssueDeatilsQuery
         {
             PublicId = issuePublicId,
-            ProjectId = Request.GetUserProfileIdFromHeader()
+            ProjectId = Request.GetProjectIdFromHeader()
         });
 
         return result;
