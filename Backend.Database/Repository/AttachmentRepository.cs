@@ -13,6 +13,13 @@ public class AttachmentRepository(ApplicationDbContext context) : IAttachmentRep
             .FirstOrDefaultAsync(c => c.Id == id, token);
     }
 
+    public async Task<IEnumerable<Attachment>> GetAllByIssueIdAsync(Guid issueId, CancellationToken token = default)
+    {
+        return await context.Attachments
+            .Where(a => a.IssueId == issueId)
+            .ToListAsync(token);
+    }
+
     public async Task<IEnumerable<Attachment>> GetAllAsync(CancellationToken token = default)
     {
         return await context.Attachments.ToListAsync(token);

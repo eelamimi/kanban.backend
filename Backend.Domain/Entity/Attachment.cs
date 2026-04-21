@@ -2,6 +2,10 @@
 
 public class Attachment : BaseEntity
 {
+    public virtual Issue Issue { get; set; }
+
+    public Guid IssueId { get; set; }
+
     public virtual Commentary Commentary { get; set; }
 
     public Guid CommentaryId { get; set; }

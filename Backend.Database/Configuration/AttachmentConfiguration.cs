@@ -32,6 +32,11 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        builder.HasOne(a => a.Issue)
+            .WithMany()
+            .HasForeignKey(a => a.IssueId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         // IXs
         builder.HasIndex("CommentaryId")
             .HasDatabaseName("IX__Attachment__CommentaryId");
