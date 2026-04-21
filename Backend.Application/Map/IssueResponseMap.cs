@@ -2,7 +2,7 @@
 
 public static class IssueResponseMap
 {
-    public static IssueResponse Map(this Issue issue)
+    public static IssueResponse Map(this Issue issue, IEnumerable<Attachment> attachments = [])
     {
         var commentaries = issue.Commentaries?
             .Select(commentary => commentary.Map())
@@ -19,6 +19,8 @@ public static class IssueResponseMap
             IsDeleted = issue.IsDeleted,
             Assignee = issue.Assignee.Map(),
             Author = issue.Author.Map(),
+            Commentaries = commentaries,
+            Attachments = attachments.Select(attachment => attachment.Map()),
         };
     }
 }

@@ -21,4 +21,6 @@ public class IssueResponse
     public int NumberInProject { get; set; }
 
     public IEnumerable<CommentaryResponse> Commentaries { get; set; } = [];
+
+    public IEnumerable<AttachmentResponse> attachments { get; set; } = [];
 }
