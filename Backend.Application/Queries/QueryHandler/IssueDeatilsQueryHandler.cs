@@ -11,6 +11,6 @@ public class IssueDeatilsQueryHandler(
         var issue = await issueRepository.GetByNumberInProjectAndProjectIdsAsync(numberInProject, command.ProjectId, true, token);
         var attachments = await attachmentRepository.GetAllByIssueIdAsync(issue.Id, token);
 
-        return issue.Map();
+        return issue.Map(attachments);
     }
 }
