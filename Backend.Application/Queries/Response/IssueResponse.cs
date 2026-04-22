@@ -20,6 +20,8 @@ public class IssueResponse
 
     public int NumberInProject { get; set; }
 
+    public DateTime CreatedAt { get; set; }
+
     public IEnumerable<CommentaryResponse> Commentaries { get; set; } = [];
 
     public IEnumerable<AttachmentResponse> Attachments { get; set; } = [];
