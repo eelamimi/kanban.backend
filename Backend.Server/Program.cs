@@ -23,11 +23,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(Backend.Domain.DomainAssemblyReference).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(Backend.Application.ApplicationAssemblyReference).Assembly);
-});
+builder.Services.AddMediatR(cfg => 
+    cfg.RegisterServicesFromAssembly(typeof(Backend.Application.ApplicationAssemblyReference).Assembly));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
