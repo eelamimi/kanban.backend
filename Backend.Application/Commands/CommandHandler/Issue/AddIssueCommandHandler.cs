@@ -16,6 +16,8 @@ public class AddIssueCommandHandler(
         var author = await userProfileRepository.GetByIdAsync(command.AuthorId, token);
         var assignee = await userProfileRepository.GetByIdAsync(command.AssigneeId, token);
 
+        var createdAt = DateTime.UtcNow;
+
         var issue = new Issue
         {
             ColumnId = column.Id,
@@ -31,7 +33,7 @@ public class AddIssueCommandHandler(
             NumberInProject = issueNumber,
             IssuePriority = command.IssuePriority,
             StoryPoints = command.StoryPoints,
-            CreatedAt = DateTime.UtcNow,
+            CreatedAt = createdAt,
         };
 
         var commentary = new Commentary
@@ -40,7 +42,8 @@ public class AddIssueCommandHandler(
             AuthorId = command.AuthorId,
             Content = command.Description,
             IsDescription = true,
-            CreatedAt = DateTime.UtcNow,
+            CreatedAt = createdAt,
+            LastEditedAt = createdAt,
         };
 
         foreach (var file in command.Files)
