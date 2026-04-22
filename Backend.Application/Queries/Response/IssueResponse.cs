@@ -2,27 +2,27 @@
 
 public class IssueResponse
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    public UserResponse Assignee { get; set; }
+    public UserResponse Assignee { get; init; }
 
-    public UserResponse Author { get; set; }
+    public UserResponse Author { get; init; }
 
-    public string Title { get; set; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
 
-    public IssueType IssueType { get; set; }
+    public IssueType IssueType { get; init; }
 
-    public int StoryPoints { get; set; }
+    public int StoryPoints { get; init; }
 
-    public IssuePriority IssuePriority { get; set; }
+    public IssuePriority IssuePriority { get; init; }
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; init; }
 
-    public int NumberInProject { get; set; }
+    public int NumberInProject { get; init; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; init; }
 
-    public IEnumerable<CommentaryResponse> Commentaries { get; set; } = [];
+    public IEnumerable<CommentaryResponse> Commentaries { get; init; } = [];
 
-    public IEnumerable<AttachmentResponse> Attachments { get; set; } = [];
+    public IEnumerable<AttachmentResponse> Attachments { get; init; } = [];
 }
