@@ -34,4 +34,11 @@ public class IssueController(IMediator mediator) : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost]
+    [Route("commentary")]
+    public async Task<IssueResponse> AddCommentary([FromForm] CreateCommentaryWithAttachmentsCommand command)
+    {
+        return await mediator.Send(command);
+    }
 }
