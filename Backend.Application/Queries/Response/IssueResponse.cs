@@ -22,6 +22,8 @@ public class IssueResponse
 
     public DateTime CreatedAt { get; init; }
 
+    public DateTime? ClosedAt { get; init; }
+
     public IEnumerable<CommentaryResponse> Commentaries { get; init; } = [];
 
     public IEnumerable<AttachmentResponse> Attachments { get; init; } = [];

@@ -22,6 +22,7 @@ public static class IssueResponseMap
             IssuePriority = issue.IssuePriority,
             IsDeleted = issue.IsDeleted,
             CreatedAt = issue.CreatedAt,
+            ClosedAt = issue.ClosedAt,
             Assignee = issue.Assignee.Map(),
             Author = issue.Author.Map(),
             Commentaries = commentaries,
