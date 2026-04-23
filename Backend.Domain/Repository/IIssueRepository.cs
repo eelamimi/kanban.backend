@@ -2,9 +2,9 @@
 
 public interface IIssueRepository
 {
-    Task<Issue> GetByIdAsync(Guid id, bool withCommentaries = false, CancellationToken token = default);
+    Task<Issue> GetByIdAsync(Guid id, bool withAuthorAndAssignee = false, bool withCommentaries = false, CancellationToken token = default);
 
-    Task<Issue?> TryGetByIdAsync(Guid id, bool withCommentaries = false, CancellationToken token = default);
+    Task<Issue?> TryGetByIdAsync(Guid id, bool withAuthorAndAssignee = false, bool withCommentaries = false, CancellationToken token = default);
 
     Task<Issue> GetByNumberInProjectAndProjectIdsAsync(int numberInProject, Guid projectId, bool withCommentaries = false, CancellationToken token = default);
 
