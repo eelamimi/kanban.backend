@@ -5,6 +5,7 @@ public static class IssueResponseMap
     public static IssueResponse Map(this Issue issue, IEnumerable<Attachment>? attachments = null)
     {
         var commentaries = issue.Commentaries?
+            .OrderBy(commentary => commentary.CreatedAt)
             .Select(commentary => commentary.Map())
             ?? [];
 
