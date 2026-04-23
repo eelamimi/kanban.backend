@@ -5,7 +5,7 @@ public class AddIssueCommandHandler(
     IProjectRepository projectRepository,
     IUserProfileRepository userProfileRepository,
     ICommentaryRepository commentaryRepository,
-    IAttachmentRepository attachmentRepository)
+    IMediator mediator)
     : ICommandHandler<AddIssueCommand, IssueResponse>
 {
     public async Task<IssueResponse> Handle(AddIssueCommand command, CancellationToken token)
@@ -46,24 +46,13 @@ public class AddIssueCommandHandler(
             LastEditedAt = createdAt,
         };
 
-        foreach (var file in command.Files)
+        await mediator.Send(new CreateAttachmentsCommand
         {
-            using var memoryStream = new MemoryStream();
-            await file.CopyToAsync(memoryStream, token);
-            var fileBytes = memoryStream.ToArray();
-
-            var attachment = new Attachment
-            {
-                IssueId = issue.Id,
-                CommentaryId = commentary.Id,
-                Content = fileBytes,
-                ContentType = file.ContentType,
-                FileName = file.FileName,
-                Size = file.Length
-            };
-
-            attachmentRepository.Add(attachment);
-        }
+            IssueId = issue.Id,
+            CommentaryId = commentary.Id,
+            Files = command.Files,
+            Save = false,
+        }, token);
 
         issueRepository.Add(issue);
         commentaryRepository.Add(commentary);
