@@ -4,14 +4,26 @@ public class IssueRepository(ApplicationDbContext context) : IIssueRepository
 {
     private static readonly SemaphoreSlim _lock = new(1, 1);
 
-    public async Task<Issue> GetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Issue> GetByIdAsync(Guid id, bool withCommentaries = false, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, token) ?? throw new NullReferenceException("Issue not found");
+        return await TryGetByIdAsync(id, withCommentaries, token) ?? throw new NullReferenceException("Issue not found");
     }
 
-    public async Task<Issue?> TryGetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Issue?> TryGetByIdAsync(Guid id, bool withCommentaries = false, CancellationToken token = default)
     {
-        return await context.Issues
+        var query = context.Issues.AsQueryable();
+
+        if (withCommentaries)
+            query = query
+                .Include(i => i.Commentaries)
+                    .ThenInclude(c => c.Author)
+                        .ThenInclude(up => up.User);
+
+        return await query
+            .Include(i => i.Assignee)
+                .ThenInclude(up => up.User)
+            .Include(i => i.Author)
+                .ThenInclude(up => up.User)
             .FirstOrDefaultAsync(c => c.Id == id, token);
     }
 
