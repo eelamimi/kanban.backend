@@ -2,6 +2,8 @@
 
 public class IssueDeatilsQuery : ICommand<IssueResponse>
 {
+    public Guid? IssueId { get; init; } = null;
+
     public Guid ProjectId { get; init; }
 
     public string PublicId { get; init; } = string.Empty;

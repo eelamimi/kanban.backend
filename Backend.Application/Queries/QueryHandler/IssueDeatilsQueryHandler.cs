@@ -7,8 +7,16 @@ public class IssueDeatilsQueryHandler(
 {
     public async Task<IssueResponse> Handle(IssueDeatilsQuery query, CancellationToken token)
     {
-        var numberInProject = int.Parse(query.PublicId.Split('-', 2)[1]);
-        var issue = await issueRepository.GetByNumberInProjectAndProjectIdsAsync(numberInProject, query.ProjectId, true, token);
+        Issue issue;
+        if (query.IssueId.HasValue)
+        {
+            issue = await issueRepository.GetByIdAsync(query.IssueId.Value, true, token);
+        }
+        else 
+        {
+            var numberInProject = int.Parse(query.PublicId.Split('-', 2)[1]);
+            issue = await issueRepository.GetByNumberInProjectAndProjectIdsAsync(numberInProject, query.ProjectId, true, token);
+        }
         var attachments = await attachmentRepository.GetAllByIssueIdAsync(issue.Id, token);
 
         return issue.Map(attachments);
