@@ -7,7 +7,7 @@ public class MoveIssueCommandHandler(
 {
     public async Task Handle(MoveIssueCommand command, CancellationToken token)
     {
-        var issue = await issueRepository.GetByIdAsync(command.IssueId, token);
+        var issue = await issueRepository.GetByIdAsync(command.IssueId, false, false, token);
         var sourceColumn = await columnRepository.GetByIdAsync(command.SourceColumnId, false, true, true, token);
         var targetColumn = await columnRepository.GetByIdAsync(command.TargetColumnId, false, false, false, token);
 

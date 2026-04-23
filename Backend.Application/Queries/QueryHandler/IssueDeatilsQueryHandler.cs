@@ -10,7 +10,7 @@ public class IssueDeatilsQueryHandler(
         Issue issue;
         if (query.IssueId.HasValue)
         {
-            issue = await issueRepository.GetByIdAsync(query.IssueId.Value, true, token);
+            issue = await issueRepository.GetByIdAsync(query.IssueId.Value, true, true, token);
         }
         else 
         {
