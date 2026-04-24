@@ -6,7 +6,7 @@ public class AttachmentResponse
 
     public string FileName { get; init; } = string.Empty;
 
-    public long Size { get; init; }
+    public string ContentType { get; set; } = string.Empty;
 
-    public byte[] Content { get; init; } = [];
+    public long Size { get; init; }
 }

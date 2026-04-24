@@ -9,7 +9,7 @@ public static class AttachmentResponseMap
             Id = attachment.Id,
             FileName = attachment.FileName,
             Size = attachment.Size,
-            Content = attachment.Content,
+            ContentType = attachment.ContentType,
         };
     }
 }
