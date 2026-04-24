@@ -7,12 +7,14 @@ public class CreateCommentaryWithAttachmentsCommandHandler(
 {
     public async Task<IssueResponse> Handle(CreateCommentaryWithAttachmentsCommand command, CancellationToken token)
     {
+        var createdAt = DateTime.UtcNow;
         var commentary = new Commentary
         {
             IssueId = command.IssueId,
             AuthorId = command.AuthorId,
             Content = command.Content,
-            CreatedAt = DateTime.UtcNow,
+            CreatedAt = createdAt,
+            LastEditedAt = createdAt,
         };
 
         commentaryRepository.Add(commentary);
