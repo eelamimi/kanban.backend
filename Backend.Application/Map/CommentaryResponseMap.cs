@@ -12,6 +12,7 @@ public static class CommentaryResponseMap
             IsDescription = commentary.IsDescription,
             CreatedAt = commentary.CreatedAt,
             LastEditedAt = commentary.LastEditedAt,
+            IsEdited = commentary.CreatedAt != commentary.LastEditedAt,
         };
     }
 }

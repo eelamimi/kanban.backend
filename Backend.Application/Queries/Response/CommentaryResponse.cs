@@ -13,4 +13,6 @@ public class CommentaryResponse
     public DateTime CreatedAt { get; init; }
 
     public DateTime? LastEditedAt { get; init; }
+
+    public bool IsEdited { get; init; }
 }
