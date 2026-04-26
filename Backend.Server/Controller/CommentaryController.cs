@@ -11,4 +11,17 @@ public class CommentaryController(IMediator mediator) : ControllerBase
     {
         return await mediator.Send(command);
     }
+
+    [HttpDelete]
+    [Route("{id:guid}")]
+    public async Task<StatusCodeResult> DeleteCommentary([FromRoute] Guid id)
+    {
+        await mediator.Send(new DeleteCommentaryCommand
+        {
+            Id = id,
+            UserProfileId = Request.GetUserProfileIdFromHeader(),
+        });
+
+        return Ok();
+    }
 }
