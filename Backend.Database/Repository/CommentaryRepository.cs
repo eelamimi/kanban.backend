@@ -2,14 +2,21 @@
 
 public class CommentaryRepository(ApplicationDbContext context) : ICommentaryRepository
 {
-    public async Task<Commentary> GetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Commentary> GetByIdAsync(Guid id, bool withAuthor = false, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, token) ?? throw new NullReferenceException("Commentary is null");
+        return await TryGetByIdAsync(id, true, token) ?? throw new NullReferenceException("Commentary is null");
     }
 
-    public async Task<Commentary?> TryGetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Commentary?> TryGetByIdAsync(Guid id, bool withAuthor = false, CancellationToken token = default)
     {
-        return await context.Commentaries
+        var query = context.Commentaries.AsQueryable();
+
+        if (withAuthor)
+            query = query
+                .Include(c => c.Author)
+                    .ThenInclude(up => up.User);
+
+        return await query
             .FirstOrDefaultAsync(c => c.Id == id, token);
     }
 

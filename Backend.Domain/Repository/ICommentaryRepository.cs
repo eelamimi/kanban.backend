@@ -2,9 +2,9 @@
 
 public interface ICommentaryRepository
 {
-    Task<Commentary> GetByIdAsync(Guid id, CancellationToken token = default);
+    Task<Commentary> GetByIdAsync(Guid id, bool withAuthor = false, CancellationToken token = default);
 
-    Task<Commentary?> TryGetByIdAsync(Guid id, CancellationToken token = default);
+    Task<Commentary?> TryGetByIdAsync(Guid id, bool withAuthor = false, CancellationToken token = default);
 
     Task<IEnumerable<Commentary>> GetAllAsync(CancellationToken token = default);
 

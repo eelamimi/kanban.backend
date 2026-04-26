@@ -6,7 +6,7 @@ public class UpdateCommentaryContentCommandHandler(
 {
     public async Task<CommentaryResponse> Handle(UpdateCommentaryContentCommand command, CancellationToken token)
     {
-        var commentary = await commentaryRepository.GetByIdAsync(command.Id, token);
+        var commentary = await commentaryRepository.GetByIdAsync(command.Id, true, token);
 
         if (commentary.AuthorId != command.UserProfileId)
             throw new ForbiddenException("Пользователь не является автором комментария");
