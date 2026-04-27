@@ -25,6 +25,7 @@ public class UpdateIssueCommandHandler(
         issue.IssueType = command.IssueType;
         
         description.Content = command.Description;
+        description.LastEditedAt = DateTime.UtcNow;
 
         await mediator.Send(new CreateAttachmentsCommand
         {
