@@ -26,6 +26,12 @@ public class IssueController(IMediator mediator) : ControllerBase
         return result;
     }
 
+    [HttpPut]
+    public async Task<IssueResponse> UpdateIssue([FromForm] UpdateIssueCommand command)
+    {
+        return await mediator.Send(command);
+    }
+
     [HttpPost]
     [Route("moveIssue")]
     public async Task<StatusCodeResult> MoveIssue([FromBody] MoveIssueCommand command)
