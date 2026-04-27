@@ -20,6 +20,12 @@ public class CommentaryRepository(ApplicationDbContext context) : ICommentaryRep
             .FirstOrDefaultAsync(c => c.Id == id, token);
     }
 
+    public async Task<Commentary> GetDescriptionAsync(Guid issueId, CancellationToken token = default)
+    {
+        return await context.Commentaries
+            .FirstAsync(com => com.IssueId == issueId && com.IsDescription, token);
+    }
+
     public async Task<IEnumerable<Commentary>> GetAllAsync(CancellationToken token = default)
     {
         return await context.Commentaries.ToListAsync(token);

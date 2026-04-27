@@ -6,6 +6,8 @@ public interface ICommentaryRepository
 
     Task<Commentary?> TryGetByIdAsync(Guid id, bool withAuthor = false, CancellationToken token = default);
 
+    Task<Commentary> GetDescriptionAsync(Guid issueId, CancellationToken token = default);
+
     Task<IEnumerable<Commentary>> GetAllAsync(CancellationToken token = default);
 
     void Add(Commentary commentary);
