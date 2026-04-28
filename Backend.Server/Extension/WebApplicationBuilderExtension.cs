@@ -69,6 +69,7 @@ public static class WebApplicationBuilderExtension
         // Infrastructure services
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<IFileStorageService, FileStorageService>();
         
         // JWT settings
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
