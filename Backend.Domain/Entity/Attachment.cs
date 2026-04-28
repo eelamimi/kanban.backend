@@ -16,5 +16,5 @@ public class Attachment : BaseEntity
 
     public long Size { get; set; }
 
-    public byte[] Content { get; set; } = [];
+    public string ContentPath { get; set; } = string.Empty;
 }
