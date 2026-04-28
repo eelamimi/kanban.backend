@@ -17,7 +17,7 @@ public class FileStorageService : IFileStorageService
         byte[] content,
         string fileName,
         string contentType,
-        CancellationToken ct = default)
+        CancellationToken token = default)
     {
         // Определяем подпапку по типу файла (можно расширить логику)
         var subFolder = GetSubFolder(contentType);
@@ -30,23 +30,23 @@ public class FileStorageService : IFileStorageService
         var filePath = Path.Combine(targetFolder, uniqueName);
 
         // Сохраняем файл
-        await File.WriteAllBytesAsync(filePath, content, ct);
+        await File.WriteAllBytesAsync(filePath, content, token);
 
         // Возвращаем относительный путь (для хранения в БД)
         return Path.Combine(subFolder, uniqueName);
     }
 
-    public async Task<byte[]> GetFileAsync(string filePath, CancellationToken ct = default)
+    public async Task<byte[]> GetFileAsync(string filePath, CancellationToken token = default)
     {
         var fullPath = Path.Combine(_storageRoot, filePath);
 
         if (!File.Exists(fullPath))
             throw new FileNotFoundException($"Файл не найден: {filePath}");
 
-        return await File.ReadAllBytesAsync(fullPath, ct);
+        return await File.ReadAllBytesAsync(fullPath, token);
     }
 
-    public Task DeleteFileAsync(string filePath, CancellationToken ct = default)
+    public Task DeleteFileAsync(string filePath, CancellationToken token = default)
     {
         var fullPath = Path.Combine(_storageRoot, filePath);
 
