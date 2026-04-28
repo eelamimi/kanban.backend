@@ -13,7 +13,7 @@ public class CreateAttachmentCommandHandler(
         await file.CopyToAsync(memoryStream, token);
         var fileBytes = memoryStream.ToArray();
 
-        var contentPath = await fileStorageService.SaveFileAsync(fileBytes, file.FileName, file.ContentType, token);
+        var contentPath = await fileStorageService.SaveFileAsync(fileBytes, file.FileName, file.ContentType, false, token);
 
         var attachment = new Attachment
         {
