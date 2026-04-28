@@ -2,7 +2,7 @@
 
 public interface IFileStorageService
 {
-    Task<string> SaveFileAsync(byte[] content, string fileName, string contentType, CancellationToken token = default);
+    Task<string> SaveFileAsync(byte[] content, string fileName, string contentType, bool isAvatar = false, CancellationToken token = default);
 
     Task<byte[]> GetFileAsync(string filePath, CancellationToken token = default);
 

@@ -13,27 +13,23 @@ public class FileStorageService : IFileStorageService
         Directory.CreateDirectory(Path.Combine(_storageRoot, "avatars"));
     }
 
-    public async Task<string> SaveFileAsync(
-        byte[] content,
-        string fileName,
-        string contentType,
-        CancellationToken token = default)
+    public async Task<string> SaveFileAsync(byte[] content, string fileName, string contentType, bool isAvatar = false, CancellationToken token = default)
     {
-        // Определяем подпапку по типу файла (можно расширить логику)
-        var subFolder = GetSubFolder(contentType);
-        var targetFolder = Path.Combine(_storageRoot, subFolder);
+        var currentDate = DateTime.UtcNow;
+        var subFolder = "attachments";
+        if (isAvatar) 
+            subFolder = "avatars";
+        var subFolders = $"{subFolder}\\{currentDate.Year}\\{currentDate.Month}\\{currentDate.Day}";
+        var targetFolder = Path.Combine(_storageRoot, subFolders);
         Directory.CreateDirectory(targetFolder);
 
-        // Генерируем уникальное имя файла
         var extension = Path.GetExtension(fileName);
         var uniqueName = $"{Guid.NewGuid():N}{extension}";
         var filePath = Path.Combine(targetFolder, uniqueName);
 
-        // Сохраняем файл
         await File.WriteAllBytesAsync(filePath, content, token);
 
-        // Возвращаем относительный путь (для хранения в БД)
-        return Path.Combine(subFolder, uniqueName);
+        return Path.Combine(subFolders, uniqueName);
     }
 
     public async Task<byte[]> GetFileAsync(string filePath, CancellationToken token = default)
@@ -57,15 +53,4 @@ public class FileStorageService : IFileStorageService
     }
 
     public string GetStorageRootPath() => _storageRoot;
-
-    private string GetSubFolder(string contentType)
-    {
-        if (contentType.StartsWith("image/"))
-            return "images";
-
-        if (contentType == "application/pdf")
-            return "documents";
-
-        return "attachments";
-    }
 }
