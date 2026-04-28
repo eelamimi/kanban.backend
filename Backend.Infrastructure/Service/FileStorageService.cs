@@ -4,10 +4,11 @@ public class FileStorageService : IFileStorageService
 {
     private readonly string _storageRoot;
 
-    public FileStorageService(IHostEnvironment hostEnvironment)
+    public FileStorageService()
     {
-        var projectRoot = hostEnvironment.ContentRootPath;
-        _storageRoot = Path.Combine(projectRoot, "Storage");
+        var projectRoot = Directory.GetCurrentDirectory();
+        var backendRoot = Path.GetDirectoryName(projectRoot);
+        _storageRoot = Path.Combine(backendRoot!, "Storage");
 
         Directory.CreateDirectory(Path.Combine(_storageRoot, "attachments"));
         Directory.CreateDirectory(Path.Combine(_storageRoot, "avatars"));
