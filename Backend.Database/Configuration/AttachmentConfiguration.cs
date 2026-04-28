@@ -14,9 +14,8 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
             .IsRequired()
             .HasMaxLength(64);
 
-        builder.Property(a => a.Content)
-            .IsRequired()
-            .HasColumnType("bytea");
+        builder.Property(a => a.ContentPath)
+            .IsRequired();
 
         builder.Property(a => a.ContentType)
             .IsRequired()
