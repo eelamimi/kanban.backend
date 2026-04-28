@@ -15,7 +15,8 @@ public class AttachmentRepository(ApplicationDbContext context) : IAttachmentRep
 
     public async Task<byte[]> GetContentByIdAsync(Guid id, CancellationToken token = default)
     {
-        return (await GetByIdAsync(id, token)).Content;
+        //return (await GetByIdAsync(id, token)).Content;
+        throw new NotImplementedException();
     }
 
     public async Task<IEnumerable<Attachment>> GetAllByIssueIdAsync(Guid issueId, CancellationToken token = default)

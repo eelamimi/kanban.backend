@@ -10,6 +10,7 @@ public class AttachmentContentQueryHandler(
         if (!await teamUserProfileRepository.IsInProject(query.UserProfileId, query.ProjectId, token))
             throw new ForbiddenException("User is not in project");
 
-        return await attachmentRepository.GetContentByIdAsync(query.AttachmentId, token);
+        //return await attachmentRepository.GetContentByIdAsync(query.AttachmentId, token);
+        return [];
     }
 }
