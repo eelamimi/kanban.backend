@@ -13,10 +13,9 @@ public class AttachmentRepository(ApplicationDbContext context) : IAttachmentRep
             .FirstOrDefaultAsync(c => c.Id == id, token);
     }
 
-    public async Task<byte[]> GetContentByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<string> GetContentPathByIdAsync(Guid id, CancellationToken token = default)
     {
-        //return (await GetByIdAsync(id, token)).Content;
-        throw new NotImplementedException();
+        return (await GetByIdAsync(id, token)).ContentPath;
     }
 
     public async Task<IEnumerable<Attachment>> GetAllByIssueIdAsync(Guid issueId, CancellationToken token = default)

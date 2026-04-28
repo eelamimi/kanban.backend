@@ -6,7 +6,7 @@ public interface IAttachmentRepository
 
     Task<Attachment?> TryGetByIdAsync(Guid id, CancellationToken token = default);
 
-    Task<byte[]> GetContentByIdAsync(Guid id, CancellationToken token = default);
+    Task<string> GetContentPathByIdAsync(Guid id, CancellationToken token = default);
 
     Task<IEnumerable<Attachment>> GetAllByIssueIdAsync(Guid issueId, CancellationToken token = default);
 
