@@ -2,9 +2,9 @@
 
 public class CreateTeamCommand : ICommand<CreateTeamResult>
 {
-    public Guid UserProfileId { get; init; }
+    public Guid UserProfileId { get; set; }
 
-    public string TeamName { get; init; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
 
-    public string RoleName { get; init; } = string.Empty;
+    public string RoleName { get; init; } = "Администратор";
 }
