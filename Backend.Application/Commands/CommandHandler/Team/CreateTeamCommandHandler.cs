@@ -4,9 +4,9 @@ public class CreateTeamCommandHandler(
     IUserProfileRepository userProfileRepository,
     ITeamRepository teamRepository,
     IRoleRepository roleRepository,
-    ITeamUserProfileRepository teamUserProfileRepository) : ICommandHandler<CreateTeamCommand, CreateTeamResult>
+    ITeamUserProfileRepository teamUserProfileRepository) : ICommandHandler<CreateTeamCommand, TeamResponse>
 {
-    public async Task<CreateTeamResult> Handle(CreateTeamCommand command, CancellationToken token)
+    public async Task<TeamResponse> Handle(CreateTeamCommand command, CancellationToken token)
     {
         var team = new Team
         {
@@ -30,9 +30,6 @@ public class CreateTeamCommandHandler(
         roleRepository.Add(role);
         await roleRepository.SaveChangesAsync(token);
 
-        return new CreateTeamResult
-        {
-            TeamId = team.Id,
-        };
+        return teamUserProfile.Map();
     }
 }

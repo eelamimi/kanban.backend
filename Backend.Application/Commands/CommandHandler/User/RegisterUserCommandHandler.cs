@@ -24,7 +24,7 @@ public class RegisterUserCommandHandler(
             Name = "Моя команда №1",
             RoleName = "Администратор"
         }, token);
-        var teamId = createTeamResult.TeamId;
+        var teamId = createTeamResult.Id;
 
         await mediator.Send(new CreateProjectCommand
         {

@@ -1,6 +1,6 @@
 ﻿namespace Backend.Application.Commands.Command;
 
-public class CreateTeamCommand : ICommand<CreateTeamResult>
+public class CreateTeamCommand : ICommand<TeamResponse>
 {
     public Guid UserProfileId { get; set; }
 
