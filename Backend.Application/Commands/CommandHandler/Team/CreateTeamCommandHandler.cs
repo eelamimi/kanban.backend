@@ -10,7 +10,7 @@ public class CreateTeamCommandHandler(
     {
         var team = new Team
         {
-            Name = command.TeamName
+            Name = command.Name
         };
         var role = new Role
         {
