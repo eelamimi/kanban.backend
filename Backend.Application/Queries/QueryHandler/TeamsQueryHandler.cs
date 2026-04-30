@@ -10,16 +10,7 @@ public class TeamsQueryHandler(ITeamUserProfileRepository teamUserProfileReposit
         {
             var teams = await teamUserProfileRepository.GetTeamsByUserProfileIdAsync(query.UserProfileId, token);
 
-            return teams.Select(tup => new TeamResponse
-            {
-                Id = tup.Team.Id,
-                Name = tup.Team.Name,
-                Role = new RoleResponse
-                {
-                    Id = tup.Role.Id,
-                    Name = tup.Role.Name
-                }
-            });
+            return teams.Select(tup => tup.Map());
         }
 
         throw new ForbiddenException("Different teams");
