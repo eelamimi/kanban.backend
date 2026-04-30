@@ -17,4 +17,13 @@ public class UserContoller(IMediator mediator) : ControllerBase
 
         return dto;
     }
+
+    [HttpPut]
+    [Route("avatar")]
+    public async Task<byte[]> UpdateAvatar([FromForm] UpdateAvatarCommand command)
+    {
+        command.UserProfileId = Request.GetUserProfileIdFromHeader();
+
+        return await mediator.Send(command);
+    }
 }
