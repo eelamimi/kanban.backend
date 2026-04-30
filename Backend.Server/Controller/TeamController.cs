@@ -31,4 +31,12 @@ public class TeamContoller(IMediator mediator) : ControllerBase
 
         return result;
     }
+
+    [HttpPost]
+    public async Task<TeamResponse> CreateTeam([FromBody] CreateTeamCommand command)
+    {
+        command.UserProfileId = Request.GetUserProfileIdFromHeader();
+
+        return await mediator.Send(command);
+    }
 }
