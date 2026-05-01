@@ -49,4 +49,17 @@ public class TeamContoller(IMediator mediator) : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete]
+    [Route("{teamId}/{userProfileId}")]
+    public async Task<StatusCodeResult> DeleteUserFromTeam([FromRoute] Guid teamId, [FromRoute] Guid userProfileId)
+    {
+        await mediator.Send(new DeleteUserFromTeamCommand
+        {
+            TeamId = teamId,
+            UserProfileId = userProfileId,
+        });
+
+        return Ok();
+    }
 }
