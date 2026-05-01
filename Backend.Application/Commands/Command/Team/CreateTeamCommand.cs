@@ -6,5 +6,5 @@ public class CreateTeamCommand : ICommand<TeamResponse>
 
     public string Name { get; init; } = string.Empty;
 
-    public string RoleName { get; init; } = "Администратор";
+    public string RoleName { get; init; } = "Создатель";
 }

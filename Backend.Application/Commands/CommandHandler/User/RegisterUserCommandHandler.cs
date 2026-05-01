@@ -22,7 +22,7 @@ public class RegisterUserCommandHandler(
         {
             UserProfileId = userProfileId,
             Name = "Моя команда №1",
-            RoleName = "Администратор"
+            RoleName = "Создатель"
         }, token);
         var teamId = createTeamResult.Id;
 
