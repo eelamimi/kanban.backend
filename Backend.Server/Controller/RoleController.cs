@@ -5,6 +5,14 @@
 [ApiController]
 public class RoleContoller(IMediator mediator) : ControllerBase
 {
+    [HttpPost]
+    public async Task<RoleResponse> CreateRole([FromBody] CreateRoleCommand command)
+    {
+        command.UserProfileId = Request.GetUserProfileIdFromHeader();
+
+        return await mediator.Send(command);
+    }
+
     [HttpPut]
     public async Task<TeamDetailsResponse> UpdateRole([FromBody] UpdateRoleCommand command)
     {
@@ -18,7 +26,7 @@ public class RoleContoller(IMediator mediator) : ControllerBase
     public async Task<StatusCodeResult> DeleteRole([FromRoute] Guid id)
     {
         await mediator.Send(new DeleteRoleCommand
-    {
+        {
             RoleId = id,
             UserProfileId = Request.GetUserProfileIdFromHeader(),
         });
