@@ -70,6 +70,7 @@ public static class WebApplicationBuilderExtension
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IFileStorageService, FileStorageService>();
+        services.AddScoped<ITokenService, TokenService>();
         
         // JWT settings
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -102,11 +103,9 @@ public static class WebApplicationBuilderExtension
 
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        //services.AddScoped<IAuthService, AuthService>();
-        //services.AddScoped<IUserService, UserService>();
-        //services.AddScoped<IProjectService, ProjectService>();
-        //services.AddScoped<ITeamService, TeamService>();
-        //services.AddScoped<IColumnService, ColumnService>();
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssembly(
+                typeof(Backend.Application.ApplicationAssemblyReference).Assembly));
 
         return services;
     }
