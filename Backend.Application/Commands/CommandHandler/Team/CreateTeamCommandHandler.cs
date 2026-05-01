@@ -28,6 +28,11 @@ public class CreateTeamCommandHandler(
         teamUserProfileRepository.Add(teamUserProfile);
         teamRepository.Add(team);
         roleRepository.Add(role);
+        roleRepository.Add(new Role
+        {
+            Name = "Участник",
+            Team = team
+        });
         await roleRepository.SaveChangesAsync(token);
 
         return teamUserProfile.Map();
