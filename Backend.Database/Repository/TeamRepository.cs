@@ -2,14 +2,23 @@
 
 public class TeamRepository(ApplicationDbContext context) : ITeamRepository
 {
-    public async Task<Team> GetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Team> GetByIdAsync(Guid id, bool withRoles = false, bool withProjects = false, CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, token) ?? throw new NullReferenceException("Team is null");
+        return await TryGetByIdAsync(id, withRoles, withProjects, token)
+            ?? throw new NullReferenceException("Team is null");
     }
 
-    public async Task<Team?> TryGetByIdAsync(Guid id, CancellationToken token = default)
+    public async Task<Team?> TryGetByIdAsync(Guid id, bool withRoles = false, bool withProjects = false, CancellationToken token = default)
     {
-        return await context.Teams
+        var query = context.Teams.AsQueryable();
+
+        if (withProjects)
+            query = query.Include(t => t.Projects);
+
+        if (withRoles)
+            query = query.Include(t => t.Roles);
+
+        return await query
             .FirstOrDefaultAsync(t => t.Id == id, token);
     }
 

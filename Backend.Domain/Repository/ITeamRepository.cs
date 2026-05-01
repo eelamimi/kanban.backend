@@ -2,9 +2,9 @@
 
 public interface ITeamRepository
 {
-    Task<Team> GetByIdAsync(Guid id, CancellationToken token = default);
+    Task<Team> GetByIdAsync(Guid id, bool withRoles = false, bool withProjects = false, CancellationToken token = default);
 
-    Task<Team?> TryGetByIdAsync(Guid id, CancellationToken token = default);
+    Task<Team?> TryGetByIdAsync(Guid id, bool withRoles = false, bool withProjects = false, CancellationToken token = default);
 
     Task<IEnumerable<Team>> GetAllAsync(CancellationToken token = default);
 
