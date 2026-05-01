@@ -18,6 +18,14 @@ public class ProjectController(IMediator mediator) : ControllerBase
         return result;
     }
 
+    [HttpPost]
+    public async Task<ProjectResponse> CreateProject([FromBody] CreateProjectCommand command)
+    {
+        command.UserProfileId = Request.GetUserProfileIdFromHeader();
+
+        return await mediator.Send(command);
+    }
+
     [HttpPut]
     public async Task<StatusCodeResult> UpdateProject([FromBody] UpdateProjectCommand command)
     {

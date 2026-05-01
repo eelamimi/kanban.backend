@@ -4,10 +4,13 @@ public class CreateProjectCommandHandler(
     IProjectRepository projectRepository,
     IUserProfileRepository userProfileRepository,
     ITeamRepository teamRepository,
-    IMediator mediator) : ICommandHandler<CreateProjectCommand, CreateProjectResult>
+    IMediator mediator) : ICommandHandler<CreateProjectCommand, ProjectResponse>
 {
-    public async Task<CreateProjectResult> Handle(CreateProjectCommand command, CancellationToken token)
+    public async Task<ProjectResponse> Handle(CreateProjectCommand command, CancellationToken token)
     {
+        if (command.Name.Length >= 16)
+            throw new UserInputException("Название проекта должно быть меньше 16 символов");
+
         var team = await teamRepository.GetByIdAsync(command.TeamId, token);
         var userProfile = await userProfileRepository.GetByIdAsync(command.UserProfileId, token);
         var project = new Project
@@ -36,9 +39,6 @@ public class CreateProjectCommandHandler(
             prevColumnId = prevColumn.Id;
         }
 
-        return new CreateProjectResult
-        {
-            ProjectId = project.Id,
-        };
+        return project.Map();
     }
 }
