@@ -14,6 +14,8 @@ public interface ITeamUserProfileRepository
 
     Task<bool> IsInProject(Guid userProfileId, Guid projectId, CancellationToken token = default);
 
+    Task<bool> IsRoleUses(Guid roleId, CancellationToken token = default);
+
     void Add(TeamUserProfile teamUserProfile);
 
     void Update(TeamUserProfile teamUserProfile);

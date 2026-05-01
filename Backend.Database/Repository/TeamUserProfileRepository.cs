@@ -52,6 +52,12 @@ public class TeamUserProfileRepository(ApplicationDbContext context) : ITeamUser
             .AnyAsync(p => p.Id == projectId, token);
     }
 
+    public async Task<bool> IsRoleUses(Guid roleId, CancellationToken token = default)
+    {
+        return await context.TeamUserProfiles
+            .AnyAsync(tup => tup.RoleId == roleId, token);
+    }
+
     public void Add(TeamUserProfile teamUserProfile)
     {
         context.TeamUserProfiles.Add(teamUserProfile);
