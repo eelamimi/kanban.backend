@@ -27,6 +27,32 @@ public class TeamUserProfileRepository(ApplicationDbContext context) : ITeamUser
             .ToListAsync(token);
     }
 
+    public async Task<TeamUserProfile> GetByUserProfileAndTeamIdAsync(
+        Guid userProfileId,
+        Guid teamId,
+        bool withUserProfiles = false,
+        bool withTeam = false,
+        bool withRole = false,
+        CancellationToken token = default)
+    {
+        var query = context.TeamUserProfiles.AsQueryable();
+
+        if (withUserProfiles)
+            query = query
+                .Include(tup => tup.UserProfile)
+                    .ThenInclude(up => up.User);
+
+        if (withTeam)
+            query = query.Include(tup => tup.Team);
+
+        if (withRole)
+            query = query.Include(tup => tup.Role);
+
+        return await query.FirstAsync(tup =>
+                tup.UserProfileId == userProfileId && tup.TeamId == teamId,
+                token);
+    }
+
     public async Task<bool> IsSameTeam(Guid firstUserProfile, Guid secondUserProfile, CancellationToken token = default)
     {
         return await context.TeamUserProfiles
@@ -34,7 +60,7 @@ public class TeamUserProfileRepository(ApplicationDbContext context) : ITeamUser
             .GroupBy(tup => tup.TeamId)
             .AnyAsync(group => group.Select(tup => tup.UserProfileId)
                 .Distinct()
-                .Count() == 2, 
+                .Count() == 2,
                 token);
     }
 

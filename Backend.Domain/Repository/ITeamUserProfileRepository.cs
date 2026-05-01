@@ -4,6 +4,14 @@ public interface ITeamUserProfileRepository
 {
     Task<IEnumerable<TeamUserProfile>> GetAllAsync(CancellationToken token = default);
 
+    Task<TeamUserProfile> GetByUserProfileAndTeamIdAsync(
+        Guid userProfileId,
+        Guid teamId,
+        bool withUserProfiles = false,
+        bool withTeam = false,
+        bool withRole = false,
+        CancellationToken token = default);
+
     Task<IEnumerable<TeamUserProfile>> GetTeamsByUserProfileIdAsync(Guid userProfileId, CancellationToken token = default);
 
     Task<IEnumerable<TeamUserProfile>> GetUsersByTeamIdAsync(Guid teamId, CancellationToken token = default);
