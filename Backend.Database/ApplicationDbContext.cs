@@ -13,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Issue> Issues => Set<Issue>();
     public DbSet<Commentary> Commentaries => Set<Commentary>();
     public DbSet<Attachment> Attachments => Set<Attachment>();
+    public DbSet<Invite> Invites => Set<Invite>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,5 +28,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.ApplyConfiguration(new IssueConfiguration());
         modelBuilder.ApplyConfiguration(new CommentaryConfiguration());
         modelBuilder.ApplyConfiguration(new AttachmentConfiguration());
+        modelBuilder.ApplyConfiguration(new InviteConfiguration());
     }
 }
