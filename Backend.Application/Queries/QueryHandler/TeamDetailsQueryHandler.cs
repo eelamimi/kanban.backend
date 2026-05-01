@@ -17,6 +17,7 @@ public class TeamDetailsQueryHandler(
 
         return new TeamDetailsResponse
         {
+            Id = team.Id,
             Name = team.Name,
             Projects = projects.Select(p => p.Map()),
             UserRolePairs = tups.Select(tup =>
