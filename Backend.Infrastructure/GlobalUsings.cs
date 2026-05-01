@@ -2,6 +2,7 @@
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Security.Claims;
 global using System.Text;
+global using System.Text.RegularExpressions;
 global using Microsoft.IdentityModel.Tokens;
 global using Backend.Domain.Service;
 global using Backend.Domain.Settings;
