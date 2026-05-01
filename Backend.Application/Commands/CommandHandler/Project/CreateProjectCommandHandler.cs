@@ -11,7 +11,7 @@ public class CreateProjectCommandHandler(
         if (command.Name.Length >= 16)
             throw new UserInputException("Название проекта должно быть меньше 16 символов");
 
-        var team = await teamRepository.GetByIdAsync(command.TeamId, token);
+        var team = await teamRepository.GetByIdAsync(command.TeamId, token: token);
         var userProfile = await userProfileRepository.GetByIdAsync(command.UserProfileId, token);
         var project = new Project
         {
