@@ -21,6 +21,12 @@ public class RoleContoller(IMediator mediator) : ControllerBase
         return await mediator.Send(command);
     }
 
+    [HttpPut]
+    public async Task<UserRolePair> UpdateUserRole([FromBody] UpdateUserRoleCommand command)
+    {
+        return await mediator.Send(command);
+    }
+
     [HttpDelete]
     [Route("{id:guid}")]
     public async Task<StatusCodeResult> DeleteRole([FromRoute] Guid id)
