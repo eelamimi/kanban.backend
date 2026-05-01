@@ -27,6 +27,12 @@ public class InviteConfiguration : IEntityTypeConfiguration<Invite>
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        builder.HasOne(i => i.Role)
+            .WithMany()
+            .HasForeignKey(i => i.RoleId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         // IXs
         builder.HasIndex(i => i.Token)
             .IsUnique()
