@@ -15,12 +15,19 @@ public class UpdateUserRoleCommandHandler(
         var teamUserProfile = await teamUserProfileRepository.GetByUserProfileAndTeamIdAsync(
             command.UserProfileId, newRole.TeamId, true, false, false, token);
 
-        teamUserProfile.Role = newRole;
-        teamUserProfile.RoleId = newRole.Id;
-
-        teamUserProfileRepository.Update(teamUserProfile);
+        teamUserProfileRepository.Remove(teamUserProfile);
         await teamUserProfileRepository.SaveChangesAsync(token);
 
-        return teamUserProfile.Map<UserRolePairResponse>();
+        var newTeamUserProfile = new TeamUserProfile
+        {
+            RoleId = newRole.Id,
+            TeamId = newRole.TeamId,
+            UserProfileId = command.UserProfileId,
+        };
+
+        teamUserProfileRepository.Add(newTeamUserProfile);
+        await teamUserProfileRepository.SaveChangesAsync(token);
+
+        return newTeamUserProfile.Map<UserRolePairResponse>();
     }
 }

@@ -22,6 +22,7 @@ public class RoleContoller(IMediator mediator) : ControllerBase
     }
 
     [HttpPut]
+    [Route("updateUserRole")]
     public async Task<UserRolePairResponse> UpdateUserRole([FromBody] UpdateUserRoleCommand command)
     {
         return await mediator.Send(command);
