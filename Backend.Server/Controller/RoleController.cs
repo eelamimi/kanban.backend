@@ -14,11 +14,14 @@ public class RoleContoller(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<StatusCodeResult> DeleteRole([FromBody] DeleteRoleCommand command)
+    [Route("{id:guid}")]
+    public async Task<StatusCodeResult> DeleteRole([FromRoute] Guid id)
     {
-        command.UserProfileId = Request.GetUserProfileIdFromHeader();
-
-        await mediator.Send(command);
+        await mediator.Send(new DeleteRoleCommand
+    {
+            RoleId = id,
+            UserProfileId = Request.GetUserProfileIdFromHeader(),
+        });
 
         return Ok();
     }

@@ -8,7 +8,7 @@ public class DeleteRoleCommandHandler(
 {
     public async Task Handle(DeleteRoleCommand command, CancellationToken token)
     {
-        if (!await teamUserProfileRepository.IsRoleUses(command.RoleId, token))
+        if (await teamUserProfileRepository.IsRoleUses(command.RoleId, token))
             throw new ForbiddenException("Роль используется");
 
         var role = await roleRepository.GetByIdAsync(command.RoleId, token);
