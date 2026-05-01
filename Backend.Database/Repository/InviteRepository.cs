@@ -13,11 +13,11 @@ public class InviteRepository(ApplicationDbContext context) : IInviteRepository
         return await context.Invites.FirstOrDefaultAsync(x => x.Id == id, token);
     }
 
-    public async Task<string?> GetLastByTeamIdAsync(Guid teamId, CancellationToken token = default)
+    public async Task<string?> GetLastByTeamAndRoleAsync(Guid teamId, Guid roleId, CancellationToken token = default)
     {
         var now = DateTime.UtcNow;
         var invite = await context.Invites
-            .Where(i => i.TeamId == teamId && i.ExpiresAt > now)
+            .Where(i => i.TeamId == teamId && i.RoleId == roleId && i.ExpiresAt > now)
             .OrderByDescending(i => i.ExpiresAt)
             .FirstOrDefaultAsync(token);
 
