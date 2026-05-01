@@ -10,4 +10,13 @@ public class InviteController(IMediator mediator) : ControllerBase
     {
         return await mediator.Send(command);
     }
+
+    [HttpPost]
+    [Route("inviteUser")]
+    public async Task<bool> InviteUser([FromBody] AddUserToTeamCommand command)
+    {
+        command.UserProfileId = Request.GetUserProfileIdFromHeader();
+
+        return await mediator.Send(command);
+    }
 }
