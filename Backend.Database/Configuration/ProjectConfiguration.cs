@@ -40,11 +40,9 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 
         // IXs
         builder.HasIndex("TeamId")
-            .IsUnique()
             .HasDatabaseName("IX__Project__TeamId");
 
         builder.HasIndex("CreatorId")
-            .IsUnique()
             .HasDatabaseName("IX__Project__CreatorId");
     }
 }
