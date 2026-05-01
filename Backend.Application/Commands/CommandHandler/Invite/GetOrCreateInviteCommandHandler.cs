@@ -9,15 +9,15 @@ public class GetOrCreateInviteCommandHandler(
         var inviteToken = await mediator.Send(new GetActiveInviteQuery
         {
             TeamId = command.TeamId,
+            RoleId = command.RoleId,
         }, token);
 
         if (inviteToken == null)
-        {
             return await mediator.Send(new CreateInviteCommand
             {
-                TeamId = command.TeamId
+                TeamId = command.TeamId,
+                RoleId = command.RoleId,
             }, token);
-        }
 
         return inviteToken;
     }
