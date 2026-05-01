@@ -46,6 +46,7 @@ public static class WebApplicationBuilderExtension
         services.AddScoped<IIssueRepository, IssueRepository>();
         services.AddScoped<ICommentaryRepository, CommentaryRepository>();
         services.AddScoped<IAttachmentRepository, AttachmentRepository>();
+        services.AddScoped<IInviteRepository, InviteRepository>();
 
         return services;
     }
