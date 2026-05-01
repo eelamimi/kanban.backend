@@ -41,6 +41,9 @@ public class InviteConfiguration : IEntityTypeConfiguration<Invite>
         builder.HasIndex(i => i.TeamId)
             .HasDatabaseName("IX__Invite__TeamId");
 
+        builder.HasIndex(i => i.RoleId)
+            .HasDatabaseName("IX__Invite__RoleId");
+
         builder.HasIndex(i => i.ExpiresAt)
             .HasDatabaseName("IX__Invite__ExpiresAt");
     }
