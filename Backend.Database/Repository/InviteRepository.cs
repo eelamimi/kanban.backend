@@ -24,6 +24,11 @@ public class InviteRepository(ApplicationDbContext context) : IInviteRepository
         return invite?.Token;
     }
 
+    public async Task<Invite> GeByTokenAsync(string inviteToken, CancellationToken token = default) 
+    {
+        return await context.Invites.FirstAsync(i => i.Token == inviteToken, token);
+    }
+
     public async void Add(Invite invite)
     {
         context.Add(invite);

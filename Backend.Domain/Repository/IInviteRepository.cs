@@ -8,6 +8,8 @@ public interface IInviteRepository
 
     Task<string?> GetLastByTeamIdAsync(Guid teamId, CancellationToken token = default);
 
+    Task<Invite> GeByTokenAsync(string inviteToken, CancellationToken token = default);
+
     void Add(Invite invite);
 
     void Update(Invite invite);
