@@ -22,7 +22,7 @@ public class RoleContoller(IMediator mediator) : ControllerBase
     }
 
     [HttpPut]
-    public async Task<UserRolePair> UpdateUserRole([FromBody] UpdateUserRoleCommand command)
+    public async Task<UserRolePairResponse> UpdateUserRole([FromBody] UpdateUserRoleCommand command)
     {
         return await mediator.Send(command);
     }

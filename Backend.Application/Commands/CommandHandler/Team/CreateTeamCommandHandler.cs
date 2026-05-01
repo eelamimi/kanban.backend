@@ -35,6 +35,6 @@ public class CreateTeamCommandHandler(
         });
         await roleRepository.SaveChangesAsync(token);
 
-        return teamUserProfile.Map();
+        return teamUserProfile.Map<TeamResponse>();
     }
 }

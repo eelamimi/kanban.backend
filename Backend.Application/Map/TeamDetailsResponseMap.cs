@@ -10,12 +10,7 @@ public static class TeamDetailsResponseMap
             Name = team.Name,
             Roles = team.Roles.Select(r => r.Map()),
             Projects = team.Projects.Select(p => p.Map()),
-            UserRolePairs = userRolePairs.Select(tup =>
-                new UserRolePair
-                {
-                    Role = tup.Role.Map(),
-                    User = tup.UserProfile.Map()
-                }),
+            UserRolePairs = userRolePairs.Select(tup => tup.Map<UserRolePairResponse>()),
         };
     }
 }

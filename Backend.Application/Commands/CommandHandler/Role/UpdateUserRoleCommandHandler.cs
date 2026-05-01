@@ -3,9 +3,9 @@
 public class UpdateUserRoleCommandHandler(
     IRoleRepository roleRepository,
     ITeamUserProfileRepository teamUserProfileRepository) :
-    ICommandHandler<UpdateUserRoleCommand, UserRolePair>
+    ICommandHandler<UpdateUserRoleCommand, UserRolePairResponse>
 {
-    public async Task<UserRolePair> Handle(UpdateUserRoleCommand command, CancellationToken token)
+    public async Task<UserRolePairResponse> Handle(UpdateUserRoleCommand command, CancellationToken token)
     {
         var newRole = await roleRepository.GetByIdAsync(command.RoleId, token);
 
@@ -21,10 +21,6 @@ public class UpdateUserRoleCommandHandler(
         teamUserProfileRepository.Update(teamUserProfile);
         await teamUserProfileRepository.SaveChangesAsync(token);
 
-        return new UserRolePair
-        {
-            Role = newRole.Map(),
-            User = teamUserProfile.UserProfile.Map(),
-        };
+        return teamUserProfile.Map<UserRolePairResponse>();
     }
 }

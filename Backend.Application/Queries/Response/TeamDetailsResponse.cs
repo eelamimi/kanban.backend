@@ -10,5 +10,5 @@ public class TeamDetailsResponse
 
     public IEnumerable<ProjectResponse> Projects { get; init; } = [];
 
-    public IEnumerable<UserRolePair> UserRolePairs { get; init; } = [];
+    public IEnumerable<UserRolePairResponse> UserRolePairs { get; init; } = [];
 }

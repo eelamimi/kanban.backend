@@ -12,13 +12,22 @@ public static class TeamResponseMap
         };
     }
 
-    public static TeamResponse Map(this TeamUserProfile teamUserProfile)
+    public static T Map<T>(this TeamUserProfile teamUserProfile) where T : new()
     {
-        return new TeamResponse
+        return typeof(T) switch
         {
-            Id = teamUserProfile.Team.Id,
-            Name = teamUserProfile.Team.Name,
-            Role = teamUserProfile.Role.Map(),
+            Type t when t == typeof(TeamResponse) => (T)(object)new TeamResponse
+            {
+                Id = teamUserProfile.Team.Id,
+                Name = teamUserProfile.Team.Name,
+                Role = teamUserProfile.Role.Map(),
+            },
+            Type t when t == typeof(UserRolePairResponse) => (T)(object)new UserRolePairResponse
+            {
+                Role = teamUserProfile.Role.Map(),
+                User = teamUserProfile.UserProfile.Map(),
+            },
+            _ => throw new NotSupportedException()
         };
     }
 }

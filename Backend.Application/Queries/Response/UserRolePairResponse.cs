@@ -1,6 +1,6 @@
 ﻿namespace Backend.Application.Queries.Response;
 
-public class UserRolePair
+public class UserRolePairResponse
 {
     public RoleResponse Role { get; set; }
 
