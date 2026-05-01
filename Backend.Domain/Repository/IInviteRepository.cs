@@ -6,6 +6,8 @@ public interface IInviteRepository
 
     Task<Invite?> TryGetByIdAsync(Guid id, CancellationToken token = default);
 
+    Task<string?> GetLastByTeamIdAsync(Guid teamId, CancellationToken token = default);
+
     void Add(Invite invite);
 
     void Update(Invite invite);
