@@ -39,4 +39,14 @@ public class TeamContoller(IMediator mediator) : ControllerBase
 
         return await mediator.Send(command);
     }
+
+    [HttpPut]
+    public async Task<StatusCodeResult> UpdateTeamName([FromBody] UpdateTeamNameCommand command)
+    {
+        command.UserProfileId = Request.GetUserProfileIdFromHeader();
+
+        await mediator.Send(command);
+
+        return Ok();
+    }
 }
