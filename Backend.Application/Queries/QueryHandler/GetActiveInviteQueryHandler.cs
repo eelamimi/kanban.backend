@@ -6,6 +6,6 @@ public class GetActiveInviteQueryHandler(
 {
     public async Task<string?> Handle(GetActiveInviteQuery command, CancellationToken token)
     {
-        return await inviteRepository.GetLastByTeamIdAsync(command.TeamId, token);
+        return await inviteRepository.GetLastByTeamAndRoleAsync(command.TeamId, command.RoleId, token);
     }
 }
