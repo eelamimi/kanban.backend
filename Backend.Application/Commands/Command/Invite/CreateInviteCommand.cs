@@ -3,4 +3,6 @@
 public class CreateInviteCommand : ICommand<string>
 {
     public Guid TeamId { get; init; }
+
+    public Guid RoleId { get; init; }
 }

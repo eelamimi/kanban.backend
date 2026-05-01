@@ -13,6 +13,7 @@ public class CreateInviteCommandHandler(
         var invite = new Invite
         {
             TeamId = command.TeamId,
+            RoleId = command.RoleId,
             Token = inviteToken,
             CreatedAt = createdAt,
             ExpiresAt = createdAt.AddDays(1),
