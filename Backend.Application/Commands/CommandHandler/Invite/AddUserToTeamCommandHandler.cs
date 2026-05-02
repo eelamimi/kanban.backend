@@ -4,16 +4,19 @@ public class AddUserToTeamCommandHandler(
     ITokenService tokenService,
     IInviteRepository inviteRepository,
     ITeamUserProfileRepository teamUserProfileRepository) :
-    ICommandHandler<AddUserToTeamCommand, bool>
+    ICommandHandler<AddUserToTeamCommand, Guid>
 {
-    public async Task<bool> Handle(AddUserToTeamCommand command, CancellationToken token)
+    public async Task<Guid> Handle(AddUserToTeamCommand command, CancellationToken token)
     {
         if (!tokenService.VerifyToken(command.Token))
-            return false;
+            throw new InvalidOperationException("Приглашение недействительно");
 
         var invite = await inviteRepository.GeByTokenAsync(command.Token, token);
-        if (invite == null || invite.ExpiresAt > DateTime.UtcNow)
-            return false;
+        if (invite == null || invite.ExpiresAt < DateTime.UtcNow)
+            throw new InvalidOperationException("Приглашение недействительно");
+
+        if (await teamUserProfileRepository.IsInTeam(command.UserProfileId, invite.TeamId, token))
+            return invite.TeamId;
 
         teamUserProfileRepository.Add(new TeamUserProfile
         {
@@ -23,6 +26,6 @@ public class AddUserToTeamCommandHandler(
         });
         await teamUserProfileRepository.SaveChangesAsync(token);
 
-        return true;
+        return invite.TeamId;
     }
 }

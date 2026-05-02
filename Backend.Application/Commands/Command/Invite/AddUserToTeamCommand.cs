@@ -1,6 +1,6 @@
 ﻿namespace Backend.Application.Commands.Command;
 
-public class AddUserToTeamCommand : ICommand<bool>
+public class AddUserToTeamCommand : ICommand<Guid>
 {
     public Guid UserProfileId { get; set; }
 
