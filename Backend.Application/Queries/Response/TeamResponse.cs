@@ -7,4 +7,6 @@ public class TeamResponse
     public string Name { get; init; } = string.Empty;
 
     public RoleResponse Role { get; init; }
+
+    public IEnumerable<ProjectResponse> Projects { get; init; } = [];
 }

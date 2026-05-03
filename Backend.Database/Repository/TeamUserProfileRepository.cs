@@ -11,6 +11,7 @@ public class TeamUserProfileRepository(ApplicationDbContext context) : ITeamUser
     {
         return await context.TeamUserProfiles
             .Include(tup => tup.Team)
+                .ThenInclude(t => t.Projects)
             .Include(tup => tup.Role)
             .Where(tup => tup.UserProfileId == userProfileId)
             .ToListAsync(token);

@@ -2,8 +2,20 @@
 
 public static class ProjectResponseMap
 {
-    public static ProjectResponse Map(this Project project)
+    public static ProjectResponse Map(this Project project, bool isNav = false)
     {
+        if (isNav)
+            return new ProjectResponse
+            {
+                Id = project.Id,
+                Name = project.Name,
+                ShortName = project.ShortName,
+                Description = project.Description,
+                Creator = new(),
+                Members = [],
+                Columns = []
+            };
+
         var columns = project.Columns?
             .Select(c => c.Map())
             .OrderBy(c => c.Position)
@@ -11,7 +23,7 @@ public static class ProjectResponseMap
 
         var members = project.Team?
             .TeamUserProfiles
-            .Select(tup => tup.UserProfile.Map()) 
+            .Select(tup => tup.UserProfile.Map())
             ?? [];
 
         return new ProjectResponse

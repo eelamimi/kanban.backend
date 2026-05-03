@@ -12,6 +12,17 @@ public static class TeamResponseMap
         };
     }
 
+    public static TeamResponse Map(this TeamUserProfile teamUserProfile, IEnumerable<Project> projects)
+    {
+        return new TeamResponse
+        {
+            Id = teamUserProfile.Team.Id,
+            Name = teamUserProfile.Team.Name,
+            Role = teamUserProfile.Role.Map(),
+            Projects = projects.Select(p => p.Map(isNav: true))
+        };
+    }
+
     public static T Map<T>(this TeamUserProfile teamUserProfile) where T : new()
     {
         return typeof(T) switch
