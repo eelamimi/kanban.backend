@@ -8,7 +8,7 @@ public class TeamsQueryHandler(ITeamUserProfileRepository teamUserProfileReposit
         if (query.UserProfileId == query.PersonUserId || 
             await teamUserProfileRepository.IsSameTeam(query.UserProfileId, query.PersonUserId, token))
         {
-            var teams = await teamUserProfileRepository.GetTeamsByUserProfileIdAsync(query.UserProfileId, token);
+            var teams = await teamUserProfileRepository.GetTeamsByUserProfileIdAsync(query.PersonUserId, token);
 
             return teams.Select(tup => tup.Map(tup.Team.Projects));
         }
