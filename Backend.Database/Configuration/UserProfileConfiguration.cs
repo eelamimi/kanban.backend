@@ -45,7 +45,6 @@ public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
 
         // IXs
         builder.HasIndex(up => new { up.FirstName, up.SecondName })
-            .IsUnique()
             .HasDatabaseName("IX__UserProfile__FullName");
     }
 }
