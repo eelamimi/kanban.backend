@@ -8,8 +8,8 @@ public class UpdatePositionCommandHandler(
 {
     public async Task Handle(UpdatePositionCommand command, CancellationToken token)
     {
-        var column = await columnRepository.GetByIdAsync(command.ColumnId, false, false, false, token);
-        var project = await projectRepository.GetByIdAsync(column.ProjectId, true, false, false, token);
+        var column = await columnRepository.GetByIdAsync(command.ColumnId, token: token);
+        var project = await projectRepository.GetByIdAsync(column.ProjectId, true, token: token);
 
         var otherColumns = project.Columns
             .Where(c => c.Id != command.ColumnId)

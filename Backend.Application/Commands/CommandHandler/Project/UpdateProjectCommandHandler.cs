@@ -6,7 +6,7 @@ public class UpdateProjectCommandHandler(
 {
     public async Task Handle(UpdateProjectCommand command, CancellationToken token)
     {
-        var project = await projectRepository.GetByIdAsync(command.ProjectId, false, false, false, token);
+        var project = await projectRepository.GetByIdAsync(command.ProjectId, token: token);
 
         project.Name = command.Name;
         project.ShortName = command.ShortName;
