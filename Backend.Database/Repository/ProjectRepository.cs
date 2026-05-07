@@ -1,19 +1,31 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
-
-namespace Backend.Database.Repository;
+﻿namespace Backend.Database.Repository;
 
 public class ProjectRepository(ApplicationDbContext context) : IProjectRepository
 {
-    public async Task<Project> GetByIdAsync(Guid id, bool includeColumns = false, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
+    public async Task<Project> GetByIdAsync(
+        Guid id,
+        bool includeColumns = false,
+        bool includeIssues = false,
+        bool includeTeam = false,
+        Guid? authorId = null,
+        Guid? assigneeId = null,
+        CancellationToken token = default)
     {
-        return await TryGetByIdAsync(id, includeColumns, includeIssues, includeTeam, token)
+        return await TryGetByIdAsync(id, includeColumns, includeIssues, includeTeam, authorId, assigneeId, token)
             ?? throw new InvalidOperationException($"Project with id {id} was not found.");
     }
 
-    public async Task<Project?> TryGetByIdAsync(Guid id, bool includeColumns = false, bool includeIssues = false, bool includeTeam = false, CancellationToken token = default)
+    public async Task<Project?> TryGetByIdAsync(
+        Guid id,
+        bool includeColumns = false,
+        bool includeIssues = false,
+        bool includeTeam = false,
+        Guid? authorId = null,
+        Guid? assigneeId = null,
+        CancellationToken token = default)
     {
         var query = context.Projects.AsQueryable();
-            
+
         if (includeColumns)
             query = query.Include(p => p.Columns);
 
@@ -25,7 +37,7 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
                     .Include(p => p.Columns)
                         .ThenInclude(c => c.NextColumnRelations)
                     .Include(p => p.Columns)
-                        .ThenIncludeIssues(twoWeeksAgo)
+                        .ThenIncludeIssues(twoWeeksAgo, authorId, assigneeId)
                     .Include(p => p.Team)
                         .ThenInclude(t => t.TeamUserProfiles)
                             .ThenInclude(tup => tup.UserProfile)
@@ -36,7 +48,7 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
                     .Include(p => p.Columns)
                         .ThenInclude(c => c.NextColumnRelations)
                     .Include(p => p.Columns)
-                        .ThenIncludeIssues(twoWeeksAgo)
+                        .ThenIncludeIssues(twoWeeksAgo, authorId, assigneeId)
                             .ThenInclude(i => i.Assignee)
                                 .ThenInclude(up => up.User)
                     .Include(p => p.Creator)
@@ -106,16 +118,25 @@ public static class QueryableExtensions
 {
     public static IIncludableQueryable<TEntity, IEnumerable<Issue>> ThenIncludeIssues<TEntity>(
         this IIncludableQueryable<TEntity, IEnumerable<Column>> query,
-        DateTime twoWeeksAgo) where TEntity : class
+        DateTime twoWeeksAgo,
+        Guid? authorId = null,
+        Guid? assigneeId = null) where TEntity : class
     {
         return query.ThenInclude(c => c.Issues.Where(i =>
-            i.ClosedAt == null || i.ClosedAt > twoWeeksAgo));
+            (i.ClosedAt == null || i.ClosedAt > twoWeeksAgo) &&
+            (!authorId.HasValue || i.AuthorId == authorId.Value) &&
+            (!assigneeId.HasValue || i.AssigneeId == assigneeId.Value)));
     }
 
     public static IIncludableQueryable<Column, IEnumerable<Issue>> ThenIncludeIssues(
-        this IQueryable<Column> query, DateTime twoWeeksAgo)
+        this IQueryable<Column> query,
+        DateTime twoWeeksAgo,
+        Guid? authorId = null,
+        Guid? assigneeId = null)
     {
         return query.Include(c => c.Issues.Where(i =>
-            i.ClosedAt == null || i.ClosedAt > twoWeeksAgo));
+            (i.ClosedAt == null || i.ClosedAt > twoWeeksAgo) &&
+            (!authorId.HasValue || i.AuthorId == authorId.Value) &&
+            (!assigneeId.HasValue || i.AssigneeId == assigneeId.Value)));
     }
 }
