@@ -8,9 +8,15 @@ public class ProjectDetailsQueryHandler(
     public async Task<ProjectResponse> Handle(ProjectDetailsQuery query, CancellationToken token)
     {
         if (!await teamUserProfileRepository.IsInProject(query.UserProfileId, query.ProjectId, token))
-            throw new ForbiddenException("User is not in project");
+            throw new ForbiddenException("Пользователь не состоит в проекте");
 
-        var project = await projectRepository.GetByIdAsync(query.ProjectId, false, true, true, token);
+        var project = await projectRepository.GetByIdAsync(
+            query.ProjectId,
+            includeIssues: true,
+            includeTeam: true,
+            authorId: query.AuthorId,
+            assigneeId: query.AssigneeId,
+            token: token);
 
         return project.Map();
     }

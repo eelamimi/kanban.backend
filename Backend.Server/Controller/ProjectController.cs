@@ -7,15 +7,18 @@ public class ProjectController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     [Route("{projectId}")]
-    public async Task<ProjectResponse> GetProjectDetails([FromRoute] Guid projectId)
+    public async Task<ProjectResponse> GetProjectDetails(
+        [FromRoute] Guid projectId,
+        [FromQuery] Guid? authorId = null,
+        [FromQuery] Guid? assigneeId = null)
     {
-        var result = await mediator.Send(new ProjectDetailsQuery
+        return await mediator.Send(new ProjectDetailsQuery
         {
             ProjectId = projectId,
-            UserProfileId = Request.GetUserProfileIdFromHeader()
+            UserProfileId = Request.GetUserProfileIdFromHeader(),
+            AuthorId = authorId,
+            AssigneeId = assigneeId,
         });
-
-        return result;
     }
 
     [HttpPost]
