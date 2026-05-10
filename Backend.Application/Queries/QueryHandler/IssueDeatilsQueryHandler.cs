@@ -2,6 +2,7 @@
 
 public class IssueDeatilsQueryHandler(
     IIssueRepository issueRepository,
+    IProjectRepository projectRepository,
     IAttachmentRepository attachmentRepository)
     : ICommandHandler<IssueDeatilsQuery, IssueResponse>
 {
@@ -17,8 +18,10 @@ public class IssueDeatilsQueryHandler(
             var numberInProject = int.Parse(query.PublicId.Split('-', 2)[1]);
             issue = await issueRepository.GetByNumberInProjectAndProjectIdsAsync(numberInProject, query.ProjectId, true, token);
         }
+
+        var project = await projectRepository.GetByIdAsync(issue.ProjectId, token: token);
         var attachments = await attachmentRepository.GetAllByIssueIdAsync(issue.Id, token);
 
-        return issue.Map(attachments);
+        return issue.Map(project, attachments);
     }
 }

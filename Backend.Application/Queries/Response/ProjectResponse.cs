@@ -9,6 +9,8 @@ public class ProjectResponse
     public string ShortName { get; init; } = string.Empty;
 
     public string Description { get; init; } = string.Empty;
+    
+    public string TeamName { get; init; } = string.Empty;
 
     public UserResponse Creator { get; init; }
 

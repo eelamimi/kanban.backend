@@ -20,6 +20,10 @@ public class IssueResponse
 
     public int NumberInProject { get; init; }
 
+    public string ProjectName { get; init; } = string.Empty;
+
+    public string ProjectShortName { get; init; } = string.Empty;
+
     public DateTime CreatedAt { get; init; }
 
     public DateTime? ClosedAt { get; init; }

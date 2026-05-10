@@ -26,6 +26,8 @@ public static class ProjectResponseMap
             .Select(tup => tup.UserProfile.Map())
             ?? [];
 
+        var teamName = project.Team?.Name ?? string.Empty;
+
         return new ProjectResponse
         {
             Id = project.Id,
@@ -33,6 +35,7 @@ public static class ProjectResponseMap
             Description = project.Description,
             Name = project.Name,
             ShortName = project.ShortName,
+            TeamName = teamName,
             Members = members,
             Columns = columns
         };
