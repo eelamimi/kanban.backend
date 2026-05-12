@@ -26,7 +26,7 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
         builder.Property(i => i.IssueType)
             .IsRequired();
         
-        builder.Property(i => i.IsDeleted)
+        builder.Property(i => i.IsClosed)
             .IsRequired()
             .HasDefaultValue(false);
 
@@ -74,7 +74,7 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
         builder.HasIndex("AuthorId")
             .HasDatabaseName("IX__Issue__AuthorId");
 
-        builder.HasIndex(i => new { i.ProjectId, i.NumberInProject, i.IsDeleted })
+        builder.HasIndex(i => new { i.ProjectId, i.NumberInProject, i.IsClosed })
             .IsUnique()
             .HasFilter("\"IsDeleted\" = false");
 

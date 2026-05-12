@@ -8,8 +8,6 @@ public class UserProfile : BaseEntity
 
     public string SecondName { get; set; } = string.Empty;
 
-    public string Extension { get; set; } = string.Empty;
-
     public byte[] Avatar { get; set; } = [];
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

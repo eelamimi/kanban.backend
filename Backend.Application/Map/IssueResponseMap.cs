@@ -26,7 +26,7 @@ public static class IssueResponseMap
             ProjectShortName = projectShortName,
             IssueType = issue.IssueType,
             IssuePriority = issue.IssuePriority,
-            IsDeleted = issue.IsDeleted,
+            IsClosed = issue.IsClosed,
             CreatedAt = issue.CreatedAt,
             ClosedAt = issue.ClosedAt,
             Assignee = issue.Assignee.Map(),

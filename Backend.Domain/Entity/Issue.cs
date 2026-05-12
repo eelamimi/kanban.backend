@@ -28,7 +28,7 @@ public class Issue : BaseEntity
 
     public IssuePriority IssuePriority { get; set; }
 
-    public bool IsDeleted { get; set; } = false;
+    public bool IsClosed { get; set; } = false;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

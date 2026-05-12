@@ -79,7 +79,7 @@ public class IssueRepository(ApplicationDbContext context) : IIssueRepository
         await context.Issues
             .Where(i => i.ColumnId == columnId)
             .ExecuteUpdateAsync(setters => setters
-                .SetProperty(i => i.IsDeleted, isDeleted)
+                .SetProperty(i => i.IsClosed, isDeleted)
                 .SetProperty(i => i.ClosedAt, closedAt),
                 token);
     }

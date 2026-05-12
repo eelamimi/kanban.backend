@@ -21,7 +21,7 @@ public class DeleteColumnCommandHandler(
         foreach (var issue in column.Issues)
         {
             issue.ColumnId = firstColumn.Id;
-            issue.IsDeleted = false;
+            issue.IsClosed = false;
             issue.ClosedAt = null;
         }
 

@@ -20,10 +20,6 @@ public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
             .IsUnicode(false)
             .HasMaxLength(256);
 
-        builder.Property(up => up.Extension)
-            .IsRequired()
-            .HasMaxLength(16);
-
         builder.Property(up => up.Avatar)
             .HasColumnType("bytea")
             .HasMaxLength(5 * 1024 * 1024);  // 5MB

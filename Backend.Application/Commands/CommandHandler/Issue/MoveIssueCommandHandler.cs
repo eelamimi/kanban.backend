@@ -21,12 +21,12 @@ public class MoveIssueCommandHandler(
 
         if (sourceColumn.Project.Columns.Count - 1 == targetColumn.Position)
         {
-            issue.IsDeleted = true;
+            issue.IsClosed = true;
             issue.ClosedAt = DateTime.UtcNow;
         }
         else
         {
-            issue.IsDeleted = false;
+            issue.IsClosed = false;
             issue.ClosedAt = null;
         }
 

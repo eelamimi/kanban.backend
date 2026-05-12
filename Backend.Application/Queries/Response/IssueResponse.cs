@@ -16,7 +16,7 @@ public class IssueResponse
 
     public IssuePriority IssuePriority { get; init; }
 
-    public bool IsDeleted { get; init; }
+    public bool IsClosed { get; init; }
 
     public int NumberInProject { get; init; }
 
