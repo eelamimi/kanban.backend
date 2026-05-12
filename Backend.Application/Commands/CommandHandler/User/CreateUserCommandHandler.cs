@@ -9,10 +9,10 @@ public class CreateUserCommandHandler(
     public async Task<RegistryOrLoginUserResponse> Handle(CreateUserCommand command, CancellationToken token)
     {
         if (command.Password != command.ConfirmPassword)
-            throw new UserInputException("Passwords are not equal");
+            throw new UserInputException("Пароли не совпадают");
 
         if (await userRepository.ExistsByEmailAsync(command.Email, token))
-            throw new ConflictException("Email already exists");
+            throw new ConflictException("Почта уже используется");
 
         var hashedPassword = passwordHasher.HashPassword(command.Password);
 
