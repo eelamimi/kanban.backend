@@ -22,10 +22,8 @@ builder.Services
             .AllowAnyHeader()
             .AllowCredentials();
         });
-    });
-
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+    })
+    .AddOpenApi();
 
 var app = builder.Build();
 
