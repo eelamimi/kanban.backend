@@ -3,9 +3,9 @@
 public class RegisterUserCommandHandler(
     IMediator mediator, 
     IJwtService jwtService) 
-    : ICommandHandler<RegisterUserCommand, RegisterUserResult>
+    : ICommandHandler<RegisterUserCommand, RegistryOrLoginUserResponse>
 {
-    public async Task<RegisterUserResult> Handle(RegisterUserCommand command, CancellationToken token)
+    public async Task<RegistryOrLoginUserResponse> Handle(RegisterUserCommand command, CancellationToken token)
     {
         var createUserResult = await mediator.Send(new CreateUserCommand
         {
@@ -37,7 +37,7 @@ public class RegisterUserCommandHandler(
 
         var jwtToken = jwtService.GenerateToken(userId, command.FirstName, command.SecondName, command.Email);
 
-        return new RegisterUserResult
+        return new RegistryOrLoginUserResponse
         {
             UserId = userId,
             UserProfileId = userProfileId,

@@ -1,6 +1,6 @@
-﻿namespace Backend.Application.Commands.Outcome;
+﻿namespace Backend.Application.Queries.Response;
 
-public class LoginUserResult
+public class RegistryOrLoginUserResponse
 {
     public Guid UserId { get; init; }
 

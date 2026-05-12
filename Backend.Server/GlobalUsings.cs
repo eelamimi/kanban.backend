@@ -11,7 +11,6 @@ global using Backend.Domain.Exceptions;
 global using Backend.Infrastructure.Service;
 global using Backend.Application.Queries.Response;
 global using Backend.Application.Queries.Query;
-global using Backend.Application.Commands.Outcome;
 global using Backend.Server.Middleware;
 global using Backend.Application.Commands.Command;
 global using Backend.Database;

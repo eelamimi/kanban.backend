@@ -1,6 +1,6 @@
 ﻿namespace Backend.Application.Commands.Command;
 
-public class LoginUserCommand : ICommand<LoginUserResult>
+public class LoginUserCommand : ICommand<RegistryOrLoginUserResponse>
 {
     public string Email { get; init; } = string.Empty;
 

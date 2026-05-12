@@ -4,9 +4,9 @@ public class CreateUserCommandHandler(
     IUserRepository userRepository,
     IUserProfileRepository userProfileRepository,
     IPasswordHasher passwordHasher) 
-    : ICommandHandler<CreateUserCommand, CreateUserResult>
+    : ICommandHandler<CreateUserCommand, RegistryOrLoginUserResponse>
 {
-    public async Task<CreateUserResult> Handle(CreateUserCommand command, CancellationToken token)
+    public async Task<RegistryOrLoginUserResponse> Handle(CreateUserCommand command, CancellationToken token)
     {
         if (command.Password != command.ConfirmPassword)
             throw new UserInputException("Passwords are not equal");
@@ -33,7 +33,7 @@ public class CreateUserCommandHandler(
         userProfileRepository.Add(userProfile);
         await userRepository.SaveChangesAsync(token);
 
-        return new CreateUserResult
+        return new RegistryOrLoginUserResponse
         {
             UserId = user.Id,
             UserProfileId = userProfile.Id

@@ -1,6 +1,6 @@
 ﻿namespace Backend.Application.Commands.Command;
 
-public class RegisterUserCommand : ICommand<RegisterUserResult>
+public class RegisterUserCommand : ICommand<RegistryOrLoginUserResponse>
 {
     public string FirstName { get; init; } = string.Empty;
 

@@ -6,7 +6,7 @@ public class AuthContoller(IMediator mediator) : ControllerBase
 {
     [HttpPost]
     [Route("register")]
-    public async Task<RegisterUserResult> RegisterUser([FromBody] RegisterUserCommand command)
+    public async Task<RegistryOrLoginUserResponse> RegisterUser([FromBody] RegisterUserCommand command)
     {
         var result = await mediator.Send(command);
 
@@ -15,7 +15,7 @@ public class AuthContoller(IMediator mediator) : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<LoginUserResult> Login([FromBody] LoginUserCommand command)
+    public async Task<RegistryOrLoginUserResponse> Login([FromBody] LoginUserCommand command)
     {
         var result = await mediator.Send(command);
 

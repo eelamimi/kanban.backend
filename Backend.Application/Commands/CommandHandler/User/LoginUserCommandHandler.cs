@@ -4,9 +4,9 @@ public class LoginUserCommandHandler(
     IUserRepository userRepository,
     IPasswordHasher passwordHasher,
     IJwtService jwtService) 
-    : ICommandHandler<LoginUserCommand, LoginUserResult>
+    : ICommandHandler<LoginUserCommand, RegistryOrLoginUserResponse>
 {
-    public async Task<LoginUserResult> Handle(LoginUserCommand command, CancellationToken token)
+    public async Task<RegistryOrLoginUserResponse> Handle(LoginUserCommand command, CancellationToken token)
     {
         var user = await userRepository.TryGetByEmailAsync(command.Email, true, token)
             ?? throw new UserInputException($"User with email {command.Email} does not exist");
@@ -17,7 +17,7 @@ public class LoginUserCommandHandler(
         var userProfile = user.UserProfile;
         var jwtToken = jwtService.GenerateToken(user.Id, userProfile.FirstName, userProfile.SecondName, user.Email);
 
-        return new LoginUserResult
+        return new RegistryOrLoginUserResponse
         {
             UserId = user.Id,
             UserProfileId = user.UserProfile.Id,
